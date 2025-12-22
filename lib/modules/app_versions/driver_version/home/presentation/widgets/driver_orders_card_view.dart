@@ -6,6 +6,8 @@ import 'package:bastoga/core/components/default_text_form_field.dart';
 import 'package:bastoga/core/components/svg_icons.dart';
 import 'package:bastoga/core/external/url_launcher.dart';
 import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/routing/routes.dart';
+import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -43,14 +45,14 @@ class _DriverOrdersCardViewState extends State<DriverOrdersCardView> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // context.pushNamed(
-        //   Routes.driverOrderDetailsScreen,
-        //   arguments: ClientDriverOrderDetailsObject(
-        //     order: widget.order,
-        //     isDriver: true,
-        //     blocContext: widget.blocContext,
-        //   ),
-        // );
+        context.pushNamed(
+          Routes.driverOrderDetailsScreen,
+          arguments: ClientDriverOrderDetailsObject(
+            order: widget.order,
+            isDriver: true,
+            cubit: widget.cubit,
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),

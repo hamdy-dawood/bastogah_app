@@ -1,10 +1,9 @@
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/helpers/context_extention.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
-import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/print_bill.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/utils/constance.dart';
 import '../../../../merchant_version/home/presentation/widgets/text_container.dart';
@@ -13,9 +12,9 @@ import '../widgets/order_items_widget.dart';
 import '../widgets/time_date_box.dart';
 
 class ClientOrderDetailsScreen extends StatelessWidget {
-  final ClientDriverOrderDetailsObject driverOrderDetailsObject;
-
   const ClientOrderDetailsScreen({super.key, required this.driverOrderDetailsObject});
+
+  final ClientOrderDetailsObject driverOrderDetailsObject;
 
   num calculateTotalOrder() {
     return driverOrderDetailsObject.order.itemsPrice + driverOrderDetailsObject.order.shippingPrice;
@@ -23,48 +22,69 @@ class ClientOrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(context), body: _buildBody(context));
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: _buildAppBar(context),
+      body: _buildBody(context),
+    );
   }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        icon: const Icon(Icons.arrow_back_ios_new_outlined),
-        onPressed: () {
-          context.pop();
-        },
+      backgroundColor: AppColors.white,
+      leading: Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: CircleAvatar(
+            backgroundColor: AppColors.defaultColor.withValues(alpha: 0.15),
+            child: const Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: AppColors.defaultColor,
+              size: 20,
+            ),
+          ),
+        ),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: Text('طلب #${driverOrderDetailsObject.order.billNo}')),
+          Expanded(
+            child: CustomText(
+              text: "تفاصيل طلب #${driverOrderDetailsObject.order.billNo}",
+              color: AppColors.black1A,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              maxLines: 3,
+            ),
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (driverOrderDetailsObject.isDriver)
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AppBills(order: driverOrderDetailsObject.order),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      ImageManager.print,
-                      height: 22,
-                      colorFilter: const ColorFilter.mode(AppColors.defaultColor, BlendMode.srcIn),
-                    ),
-                  ),
-                ),
-              const SizedBox(width: 10),
+              // if (driverOrderDetailsObject.isDriver)
+              //   GestureDetector(
+              //     onTap: () {
+              //       showDialog(
+              //         context: context,
+              //         builder: (context) => AppBills(order: driverOrderDetailsObject.order),
+              //       );
+              //     },
+              //     child: Container(
+              //       padding: const EdgeInsets.all(6),
+              //       decoration: BoxDecoration(
+              //         color: Colors.white.withValues(alpha: 0.9),
+              //         shape: BoxShape.circle,
+              //       ),
+              //       child: SvgPicture.asset(
+              //         ImageManager.print,
+              //         height: 22,
+              //         colorFilter: const ColorFilter.mode(AppColors.defaultColor, BlendMode.srcIn),
+              //       ),
+              //     ),
+              //   ),
+              // const SizedBox(width: 10),
               _buildOrderStatusContainer(),
             ],
           ),
@@ -76,8 +96,9 @@ class ClientOrderDetailsScreen extends StatelessWidget {
   Widget _buildOrderStatusContainer() {
     return TextContainer(
       text: _getOrderStatusText(driverOrderDetailsObject.order.status),
-      buttonColor: _getOrderStatusColor(driverOrderDetailsObject.order.status),
-      fontColor: Colors.white,
+      fontColor: _getOrderStatusColor(driverOrderDetailsObject.order.status),
+      borderColor: _getOrderStatusColor(driverOrderDetailsObject.order.status),
+      buttonColor: Colors.white,
     );
   }
 
@@ -168,17 +189,21 @@ class ClientOrderDetailsScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [
-          TimeAndDateBox(
-            iconData: Icons.calendar_month,
-            value: AppConstance.dateFormat.format(
-              DateTime.parse(driverOrderDetailsObject.order.createdAt).toLocal(),
+          Expanded(
+            child: TimeAndDateBox(
+              icon: ImageManager.calenderIcon,
+              value: AppConstance.dateFormat.format(
+                DateTime.parse(driverOrderDetailsObject.order.createdAt).toLocal(),
+              ),
             ),
           ),
-          const SizedBox(width: 16),
-          TimeAndDateBox(
-            iconData: Icons.access_time,
-            value: AppConstance.timeFormat.format(
-              DateTime.parse(driverOrderDetailsObject.order.createdAt).toLocal(),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TimeAndDateBox(
+              icon: ImageManager.clockIcon,
+              value: AppConstance.timeFormat.format(
+                DateTime.parse(driverOrderDetailsObject.order.createdAt).toLocal(),
+              ),
             ),
           ),
         ],
@@ -233,7 +258,7 @@ class ClientOrderDetailsScreen extends StatelessWidget {
 }
 
 class PriceDetailsSection extends StatelessWidget {
-  final ClientDriverOrderDetailsObject driverOrderDetailsObject;
+  final ClientOrderDetailsObject driverOrderDetailsObject;
 
   const PriceDetailsSection({super.key, required this.driverOrderDetailsObject});
 

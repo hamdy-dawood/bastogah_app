@@ -152,7 +152,7 @@ class AppRouter {
           settings: settings,
           pageBuilder:
               (_, anim, anim1) => ClientOrderDetailsScreen(
-                driverOrderDetailsObject: arguments as ClientDriverOrderDetailsObject,
+                driverOrderDetailsObject: arguments as ClientOrderDetailsObject,
               ),
         );
 

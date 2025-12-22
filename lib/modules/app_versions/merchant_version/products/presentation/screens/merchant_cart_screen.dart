@@ -255,7 +255,7 @@ class _MerchantCartScreenState extends State<MerchantCartScreen> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             SvgPicture.asset(
-                                              ImageManager.offersColorIcon,
+                                              ImageManager.offersIcon,
                                               height: 20,
                                               colorFilter: const ColorFilter.mode(
                                                 Colors.white,

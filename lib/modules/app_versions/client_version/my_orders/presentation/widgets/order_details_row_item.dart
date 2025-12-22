@@ -1,6 +1,6 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/utils/colors.dart';
 
 class OrderDetailsRowItem extends StatelessWidget {
   final String title;
@@ -19,17 +19,18 @@ class OrderDetailsRowItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: Colors.black.withValues(alpha: 0.5)),
+        CustomText(
+          text: title,
+          color: AppColors.black4B,
+          fontWeight: FontWeight.w400,
+          fontSize: 16,
         ),
-        Text(
-          '$value د.ع',
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: valueColored ? AppColors.defaultColor : null),
+        CustomText(
+          text: "$value د.ع",
+          // check color
+          color: valueColored ? AppColors.defaultColor : AppColors.black4B,
+          fontWeight: FontWeight.w400,
+          fontSize: 18,
         ),
       ],
     );

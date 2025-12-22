@@ -13,7 +13,7 @@ class OfferIconView extends StatelessWidget {
       width: 25,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-      child: SvgPicture.asset(ImageManager.offersColorIcon),
+      child: SvgPicture.asset(ImageManager.offersIcon),
     );
   }
 }

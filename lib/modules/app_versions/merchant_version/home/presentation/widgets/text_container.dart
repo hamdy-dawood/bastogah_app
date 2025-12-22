@@ -1,3 +1,4 @@
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class TextContainer extends StatelessWidget {
@@ -7,15 +8,12 @@ class TextContainer extends StatelessWidget {
     required this.buttonColor,
     this.borderColor,
     required this.fontColor,
-    // this.padding,
     this.borderRadius,
   });
 
   final String text;
   final Color buttonColor, fontColor;
   final Color? borderColor;
-
-  // final EdgeInsets? padding;
   final double? borderRadius;
 
   @override
@@ -28,11 +26,8 @@ class TextContainer extends StatelessWidget {
         border: Border.all(color: borderColor ?? buttonColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: fontColor),
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: CustomText(text: text, color: fontColor, fontWeight: FontWeight.w700, fontSize: 16),
       ),
     );
   }

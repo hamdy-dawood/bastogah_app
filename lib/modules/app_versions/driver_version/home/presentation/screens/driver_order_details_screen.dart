@@ -1,12 +1,10 @@
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/helpers/context_extention.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
-import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/print_bill.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/components/default_text_form_field.dart';
 import '../../../../../../core/external/url_launcher.dart';
@@ -15,7 +13,6 @@ import '../../../../../../core/utils/constance.dart';
 import '../../../../client_version/my_orders/presentation/widgets/order_details_row_item.dart';
 import '../../../../client_version/my_orders/presentation/widgets/order_items_widget.dart';
 import '../../../../client_version/my_orders/presentation/widgets/time_date_box.dart';
-import '../../../../driver_version/home/presentation/cubit/driver_home_cubit.dart';
 import '../../../../merchant_version/home/presentation/widgets/details_finish_bottom_sheet.dart';
 import '../../../../merchant_version/home/presentation/widgets/row_icon_text.dart';
 import '../../../../merchant_version/home/presentation/widgets/text_container.dart';
@@ -33,47 +30,65 @@ class DriverOrderDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        leading: IconButton(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          icon: const Icon(Icons.arrow_back_ios_new_outlined),
-          onPressed: () {
-            context.pop();
-          },
+        backgroundColor: AppColors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: GestureDetector(
+            onTap: () {
+              context.pop();
+            },
+            child: CircleAvatar(
+              backgroundColor: AppColors.defaultColor.withValues(alpha: 0.15),
+              child: const Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: AppColors.defaultColor,
+                size: 20,
+              ),
+            ),
+          ),
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: Text('طلب #${driverOrderDetailsObject.order.billNo}')),
+            Expanded(
+              child: CustomText(
+                text: "تفاصيل طلب #${driverOrderDetailsObject.order.billNo}",
+                color: AppColors.black1A,
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                maxLines: 3,
+              ),
+            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (driverOrderDetailsObject.isDriver)
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AppBills(order: driverOrderDetailsObject.order),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        ImageManager.print,
-                        height: 22,
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.defaultColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                  ),
-                const SizedBox(width: 10),
+                // if (driverOrderDetailsObject.isDriver)
+                //   GestureDetector(
+                //     onTap: () {
+                //       showDialog(
+                //         context: context,
+                //         builder: (context) => AppBills(order: driverOrderDetailsObject.order),
+                //       );
+                //     },
+                //     child: Container(
+                //       padding: const EdgeInsets.all(6),
+                //       decoration: BoxDecoration(
+                //         color: Colors.white.withValues(alpha: 0.9),
+                //         shape: BoxShape.circle,
+                //       ),
+                //       child: SvgPicture.asset(
+                //         ImageManager.print,
+                //         height: 22,
+                //         colorFilter: const ColorFilter.mode(
+                //           AppColors.defaultColor,
+                //           BlendMode.srcIn,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // const SizedBox(width: 10),
                 TextContainer(
                   text:
                       driverOrderDetailsObject.order.status == 0
@@ -85,16 +100,25 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                           : driverOrderDetailsObject.order.status == 3
                           ? 'مكتمل'
                           : 'ملغي',
-                  buttonColor:
+                  buttonColor: AppColors.white,
+                  borderColor:
                       driverOrderDetailsObject.order.status == 0 ||
                               driverOrderDetailsObject.order.status == 1
-                          ? AppColors.yellowColor
+                          ? AppColors.yellowE4
                           : driverOrderDetailsObject.order.status == 2
-                          ? AppColors.blue2Color
+                          ? AppColors.defaultColor
                           : driverOrderDetailsObject.order.status == 3
-                          ? AppColors.green2Color
+                          ? AppColors.green00A
                           : AppColors.redE7,
-                  fontColor: Colors.white,
+                  fontColor:
+                      driverOrderDetailsObject.order.status == 0 ||
+                              driverOrderDetailsObject.order.status == 1
+                          ? AppColors.yellowE4
+                          : driverOrderDetailsObject.order.status == 2
+                          ? AppColors.defaultColor
+                          : driverOrderDetailsObject.order.status == 3
+                          ? AppColors.green00A
+                          : AppColors.redE7,
                 ),
               ],
             ),
@@ -110,21 +134,25 @@ class DriverOrderDetailsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
-                  TimeAndDateBox(
-                    iconData: Icons.calendar_month,
-                    value: AppConstance.dateFormat.format(
-                      DateTime.parse(
-                        driverOrderDetailsObject.order.createdAt,
-                      ).add(const Duration(hours: 3)),
+                  Expanded(
+                    child: TimeAndDateBox(
+                      icon: ImageManager.calenderIcon,
+                      value: AppConstance.dateFormat.format(
+                        DateTime.parse(
+                          driverOrderDetailsObject.order.createdAt,
+                        ).add(const Duration(hours: 3)),
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  TimeAndDateBox(
-                    iconData: Icons.access_time,
-                    value: AppConstance.timeFormat.format(
-                      DateTime.parse(
-                        driverOrderDetailsObject.order.createdAt,
-                      ).add(const Duration(hours: 3)),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TimeAndDateBox(
+                      icon: ImageManager.clockIcon,
+                      value: AppConstance.timeFormat.format(
+                        DateTime.parse(
+                          driverOrderDetailsObject.order.createdAt,
+                        ).add(const Duration(hours: 3)),
+                      ),
                     ),
                   ),
                 ],
@@ -202,8 +230,7 @@ class DriverOrderDetailsScreen extends StatelessWidget {
           driverOrderDetailsObject.order.status == 1
               ? GestureDetector(
                 onTap: () {
-                  driverOrderDetailsObject.blocContext
-                      .read<DriverHomeCubit>()
+                  driverOrderDetailsObject.cubit
                       .setDriver(orderId: driverOrderDetailsObject.order.id)
                       .whenComplete(() {
                         context.pop();
@@ -229,11 +256,9 @@ class DriverOrderDetailsScreen extends StatelessWidget {
     final TextEditingController rejectedController = TextEditingController();
     return DetailsFinishBottomSheet(
       onTapFinish: () {
-        driverOrderDetailsObject.blocContext
-            .read<DriverHomeCubit>()
+        driverOrderDetailsObject.cubit
             .editOrder(orderId: driverOrderDetailsObject.order.id, status: 3)
             .whenComplete(() {
-              // close details page
               context.pop();
             });
       },
@@ -259,7 +284,6 @@ class DriverOrderDetailsScreen extends StatelessWidget {
               CancelOrderButton(
                 text: "رجوع",
                 onTap: () {
-                  // close dialog
                   context.pop();
                 },
               ),
@@ -267,17 +291,14 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                 text: "رفض",
                 onTap: () {
                   if (rejectedController.text.isNotEmpty) {
-                    driverOrderDetailsObject.blocContext
-                        .read<DriverHomeCubit>()
+                    driverOrderDetailsObject.cubit
                         .editOrder(
                           orderId: driverOrderDetailsObject.order.id,
                           status: 4,
                           canceledReason: rejectedController.text,
                         )
                         .whenComplete(() {
-                          //close dialog
                           context.pop();
-                          // close page
                           context.pop();
                         });
                   }

@@ -41,7 +41,6 @@ class ImageManager {
   static const String homeIcon = '$svgPath/home.svg';
   static const String ordersIcon = '$svgPath/orders.svg';
   static const String offersIcon = '$svgPath/offers.svg';
-  static const String favoriteGreyIcon = '$svgPath/favorite-grey.svg';
   static const String favoriteIcon = '$svgPath/favorite.svg';
   static const String profileIcon = '$svgPath/profile.svg';
 
@@ -50,7 +49,6 @@ class ImageManager {
   static const String coloredOffersIcon = '$svgPath/colored_offers.svg';
   static const String coloredFavoriteIcon = '$svgPath/colored_favorite.svg';
   static const String coloredProfileIcon = '$svgPath/colored_profile.svg';
-  static const String offersColorIcon = '$svgPath/offersColor.svg';
 
   static const String reportsIcon = '$svgPath/reports_icon.svg';
   static const String calenderIcon = '$svgPath/calender_icon.svg';
@@ -80,7 +78,6 @@ class ImageManager {
 
   static const String openMapIcon = '$svgPath/open_map.svg';
   static const String upDown = '$svgPath/up_down.svg';
-  static const String pendingUpDown = '$svgPath/pending_up_down.svg';
   static const String print = '$svgPath/print.svg';
 
   static const String dollar = '$svgPath/dollar.svg';

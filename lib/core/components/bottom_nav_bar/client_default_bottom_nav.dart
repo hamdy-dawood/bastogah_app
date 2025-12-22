@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../caching/shared_prefs.dart';
 import '../../controllers/navigator_bloc/navigator_cubit.dart';
+import '../../controllers/navigator_bloc/navigator_states.dart';
 import '../../routing/routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/constance.dart';
@@ -17,99 +18,144 @@ class ClientDefaultBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        textTheme: Theme.of(context).textTheme.apply(fontFamily: AppConstance.appFomFamily),
-      ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        elevation: 0.0,
-        iconSize: 22.0,
-        selectedFontSize: 12.0,
-        unselectedFontSize: 12.0,
-        backgroundColor: Colors.white,
-        selectedItemColor: AppColors.defaultColor,
-        unselectedItemColor: Colors.grey,
-        currentIndex: context.read<NavigatorCubit>().clientCurrentIndex,
-        onTap: (index) {
-          if (Caching.getData(key: AppConstance.guestCachedKey) != null &&
-              (index == 1 || index == 3)) {
-            DialogHelper.showCustomDialog(
-              context: context,
-              alertDialog: WarningAlertPopUp(
-                image: ImageManager.warningIcon,
-                description: 'قم بتسجيل الدخول أولا!',
-                btnContent: 'تسجيل الدخول',
-                onPress: () {
-                  context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: (route) => false);
-                },
+    return BlocBuilder<NavigatorCubit, NavigatorStates>(
+      builder: (context, state) {
+        final cubit = NavigatorCubit.get(context);
+        final currentIndex = cubit.clientCurrentIndex;
+
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withValues(alpha: 0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -5),
               ),
-            );
-          } else {
-            context.read<NavigatorCubit>().clientGoTo(
-              index: index,
-              context: context,
-              screen: context.read<NavigatorCubit>().clientScreens[index],
-              arguments: context,
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon:
-                context.read<NavigatorCubit>().clientCurrentIndex == 0
-                    ? CircleAvatar(
-                      backgroundColor: AppColors.defaultColor,
-                      child: SvgPicture.asset(ImageManager.coloredHomeIcon),
-                    )
-                    : CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: SvgPicture.asset(ImageManager.homeIcon),
-                    ),
-            label: "الرئيسية",
+            ],
           ),
-          BottomNavigationBarItem(
-            icon:
-                context.read<NavigatorCubit>().clientCurrentIndex == 1
-                    ? CircleAvatar(
-                      backgroundColor: AppColors.defaultColor,
-                      child: SvgPicture.asset(ImageManager.coloredOrdersIcon),
-                    )
-                    : CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: SvgPicture.asset(ImageManager.ordersIcon),
-                    ),
-            label: "طلباتي",
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                context: context,
+                cubit: cubit,
+                index: 0,
+                label: "الرئيسية",
+                iconPath: currentIndex == 0 ? ImageManager.coloredHomeIcon : ImageManager.homeIcon,
+                isSelected: currentIndex == 0,
+                colorIcon: false,
+              ),
+              _buildNavItem(
+                context: context,
+                cubit: cubit,
+                index: 1,
+                label: "طلباتي",
+                iconPath:
+                    currentIndex == 1 ? ImageManager.coloredOrdersIcon : ImageManager.ordersIcon,
+                isSelected: currentIndex == 1,
+                colorIcon: false,
+              ),
+              _buildNavItem(
+                context: context,
+                cubit: cubit,
+                index: 2,
+                label: "المفضلة",
+                iconPath:
+                    currentIndex == 2
+                        ? ImageManager.coloredFavoriteIcon
+                        : ImageManager.favoriteIcon,
+                isSelected: currentIndex == 2,
+                colorIcon: false,
+              ),
+              _buildNavItem(
+                context: context,
+                cubit: cubit,
+                index: 3,
+                label: "حسابي",
+                iconPath:
+                    currentIndex == 3 ? ImageManager.coloredProfileIcon : ImageManager.profileIcon,
+                isSelected: currentIndex == 3,
+                colorIcon: false,
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon:
-                context.read<NavigatorCubit>().clientCurrentIndex == 2
-                    ? CircleAvatar(
-                      backgroundColor: AppColors.defaultColor,
-                      child: SvgPicture.asset(ImageManager.coloredFavoriteIcon),
-                    )
-                    : CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: SvgPicture.asset(ImageManager.favoriteGreyIcon),
-                    ),
-            label: "المفضلة",
-          ),
-          BottomNavigationBarItem(
-            icon:
-                context.read<NavigatorCubit>().clientCurrentIndex == 3
-                    ? CircleAvatar(
-                      backgroundColor: AppColors.defaultColor,
-                      child: SvgPicture.asset(ImageManager.coloredProfileIcon),
-                    )
-                    : CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: SvgPicture.asset(ImageManager.profileIcon),
-                    ),
-            label: "حسابي",
-          ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildNavItem({
+    required BuildContext context,
+    required NavigatorCubit cubit,
+    required int index,
+    required String label,
+    required String iconPath,
+    required bool isSelected,
+    bool colorIcon = true,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        if (Caching.getData(key: AppConstance.guestCachedKey) != null &&
+            (index == 1 || index == 3)) {
+          DialogHelper.showCustomDialog(
+            context: context,
+            alertDialog: WarningAlertPopUp(
+              image: ImageManager.warningIcon,
+              description: 'قم بتسجيل الدخول أولا!',
+              btnContent: 'تسجيل الدخول',
+              onPress: () {
+                context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: (route) => false);
+              },
+            ),
+          );
+        } else {
+          cubit.clientGoTo(
+            index: index,
+            context: context,
+            screen: cubit.clientScreens[index],
+            arguments: context,
+          );
+        }
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding:
+            isSelected
+                ? const EdgeInsets.symmetric(horizontal: 24, vertical: 8)
+                : const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.defaultColor.withValues(alpha: 0.1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              width: 24,
+              height: 24,
+              colorFilter:
+                  colorIcon || (!isSelected && !iconPath.contains('colored'))
+                      ? ColorFilter.mode(
+                        isSelected ? AppColors.defaultColor : AppColors.orangeFF,
+                        BlendMode.srcIn,
+                      )
+                      : null,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? AppColors.defaultColor : AppColors.orangeFF,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 12,
+                fontFamily: AppConstance.appFomFamily,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -485,7 +485,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
-                            ImageManager.offersColorIcon,
+                            ImageManager.offersIcon,
                             height: 20,
                             colorFilter: const ColorFilter.mode(AppColors.redE7, BlendMode.srcIn),
                           ),

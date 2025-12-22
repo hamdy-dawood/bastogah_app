@@ -19,11 +19,7 @@ class OrderWidget extends StatelessWidget {
       onTap: () {
         context.pushNamed(
           Routes.clientOrderDetailsScreen,
-          arguments: ClientDriverOrderDetailsObject(
-            order: order,
-            isDriver: false,
-            blocContext: context,
-          ),
+          arguments: ClientOrderDetailsObject(order: order, isDriver: false),
         );
       },
       child: Container(

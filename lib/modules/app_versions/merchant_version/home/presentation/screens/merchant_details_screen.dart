@@ -1,6 +1,7 @@
 import 'package:bastoga/core/caching/shared_prefs.dart';
 import 'package:bastoga/core/components/alert_pop_up.dart';
 import 'package:bastoga/core/components/components.dart';
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/overlay_loading.dart';
 import 'package:bastoga/core/components/printer/mdsoft_printer.dart';
 import 'package:bastoga/core/helpers/context_extention.dart';
@@ -10,11 +11,9 @@ import 'package:bastoga/core/utils/constance.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/domain/entities/merchant_order_details_object.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/cubit/home_cubit.dart';
-import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/print_bill.dart';
 import 'package:bluetooth_thermal_printer_plus/bluetooth_thermal_printer_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/helpers/dialog_helper.dart';
 import '../../../../client_version/my_orders/presentation/widgets/order_details_row_item.dart';
@@ -36,51 +35,64 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
     return BlocProvider.value(
       value: merchantOrderDetailsObject.blocContext.read<MerchantHomeCubit>(),
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: AppBar(
-          leading: IconButton(
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: const Icon(Icons.arrow_back_ios_new_outlined),
-            onPressed: () {
-              context.pop();
-            },
+          backgroundColor: AppColors.white,
+          leading: Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: CircleAvatar(
+                backgroundColor: AppColors.defaultColor.withValues(alpha: 0.15),
+                child: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  color: AppColors.defaultColor,
+                  size: 20,
+                ),
+              ),
+            ),
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(
-                  'طلب #${merchantOrderDetailsObject.order.billNo}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                child: CustomText(
+                  text: "تفاصيل طلب #${merchantOrderDetailsObject.order.billNo}",
+                  color: AppColors.black1A,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  maxLines: 3,
                 ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AppBills(order: merchantOrderDetailsObject.order),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        ImageManager.print,
-                        height: 22,
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.defaultColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     showDialog(
+                  //       context: context,
+                  //       builder: (context) => AppBills(order: merchantOrderDetailsObject.order),
+                  //     );
+                  //   },
+                  //   child: Container(
+                  //     padding: const EdgeInsets.all(6),
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white.withValues(alpha: 0.9),
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: SvgPicture.asset(
+                  //       ImageManager.print,
+                  //       height: 22,
+                  //       colorFilter: const ColorFilter.mode(
+                  //         AppColors.defaultColor,
+                  //         BlendMode.srcIn,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(width: 10),
                   TextContainer(
                     text:
                         merchantOrderDetailsObject.order.status == 0
@@ -92,7 +104,9 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                             : merchantOrderDetailsObject.order.status == 3
                             ? 'مكتمل'
                             : 'ملغي',
-                    buttonColor:
+
+                    buttonColor: AppColors.white,
+                    borderColor:
                         merchantOrderDetailsObject.order.status == 0 ||
                                 merchantOrderDetailsObject.order.status == 1
                             ? AppColors.yellowColor
@@ -101,7 +115,16 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                             : merchantOrderDetailsObject.order.status == 3
                             ? AppColors.green2Color
                             : AppColors.redE7,
-                    fontColor: Colors.white,
+                    fontColor:
+                        merchantOrderDetailsObject.order.status == 0 ||
+                                merchantOrderDetailsObject.order.status == 0 ||
+                                merchantOrderDetailsObject.order.status == 1
+                            ? AppColors.yellowColor
+                            : merchantOrderDetailsObject.order.status == 2
+                            ? AppColors.blue2Color
+                            : merchantOrderDetailsObject.order.status == 3
+                            ? AppColors.green2Color
+                            : AppColors.redE7,
                   ),
                 ],
               ),
@@ -117,17 +140,21 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    TimeAndDateBox(
-                      iconData: Icons.calendar_month,
-                      value: AppConstance.dateFormat.format(
-                        DateTime.parse(merchantOrderDetailsObject.order.createdAt).toLocal(),
+                    Expanded(
+                      child: TimeAndDateBox(
+                        icon: ImageManager.calenderIcon,
+                        value: AppConstance.dateFormat.format(
+                          DateTime.parse(merchantOrderDetailsObject.order.createdAt).toLocal(),
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    TimeAndDateBox(
-                      iconData: Icons.access_time,
-                      value: AppConstance.timeFormat.format(
-                        DateTime.parse(merchantOrderDetailsObject.order.createdAt).toLocal(),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TimeAndDateBox(
+                        icon: ImageManager.clockIcon,
+                        value: AppConstance.timeFormat.format(
+                          DateTime.parse(merchantOrderDetailsObject.order.createdAt).toLocal(),
+                        ),
                       ),
                     ),
                   ],

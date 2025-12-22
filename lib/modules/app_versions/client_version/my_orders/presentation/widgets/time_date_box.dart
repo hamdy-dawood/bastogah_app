@@ -1,10 +1,13 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class TimeAndDateBox extends StatelessWidget {
-  final IconData iconData;
+  final String icon;
   final String value;
 
-  const TimeAndDateBox({super.key, required this.iconData, required this.value});
+  const TimeAndDateBox({super.key, required this.icon, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -12,20 +15,21 @@ class TimeAndDateBox extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.greyE0),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(iconData, color: Colors.black.withValues(alpha: 0.5)),
+          SvgIcon(icon: icon, color: AppColors.grey9A, height: 20),
           const SizedBox(width: 5),
           Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Text(
-              value,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.black.withValues(alpha: 0.5)),
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: CustomText(
+              text: value,
+              color: AppColors.grey9A,
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
             ),
           ),
         ],
