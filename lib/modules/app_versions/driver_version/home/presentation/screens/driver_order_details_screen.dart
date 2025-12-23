@@ -1,3 +1,4 @@
+import 'package:bastoga/core/components/alert_pop_up.dart';
 import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/helpers/context_extention.dart';
 import 'package:bastoga/core/utils/colors.dart';
@@ -5,10 +6,10 @@ import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/components/default_text_form_field.dart';
 import '../../../../../../core/external/url_launcher.dart';
-import '../../../../../../core/helpers/dialog_helper.dart';
 import '../../../../../../core/utils/constance.dart';
 import '../../../../client_version/my_orders/presentation/widgets/order_details_row_item.dart';
 import '../../../../client_version/my_orders/presentation/widgets/order_items_widget.dart';
@@ -16,7 +17,6 @@ import '../../../../client_version/my_orders/presentation/widgets/time_date_box.
 import '../../../../merchant_version/home/presentation/widgets/details_finish_bottom_sheet.dart';
 import '../../../../merchant_version/home/presentation/widgets/row_icon_text.dart';
 import '../../../../merchant_version/home/presentation/widgets/text_container.dart';
-import '../widgets/cancel_order_button.dart';
 
 class DriverOrderDetailsScreen extends StatelessWidget {
   final ClientDriverOrderDetailsObject driverOrderDetailsObject;
@@ -158,64 +158,72 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 4, right: 16, left: 16),
-              child: Text('تفاصيل الطلبية', style: Theme.of(context).textTheme.titleMedium),
-            ),
+            const SizedBox(height: 25),
             PriceDetailsSection(driverOrderDetailsObject: driverOrderDetailsObject),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 4, right: 16, left: 16),
-              child: Text('المتجر', style: Theme.of(context).textTheme.titleMedium),
-            ),
-            // const StoreNameSection(),
+            const SizedBox(height: 25),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+                color: AppColors.greyFC,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.greyF5),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.end,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  CustomText(
+                    text: "المتجر",
+                    color: AppColors.black4B,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        driverOrderDetailsObject.order.merchantName,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            driverOrderDetailsObject.order.merchantName,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          Text(
+                            driverOrderDetailsObject.order.merchantPhone,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.black.withValues(alpha: 0.5),
+                            ),
+                            textDirection: TextDirection.ltr,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        driverOrderDetailsObject.order.merchantPhone,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.black.withValues(alpha: 0.5),
+                      GestureDetector(
+                        onTap: () {
+                          UrlLaunchers().phoneCallLauncher(
+                            phoneNumber: driverOrderDetailsObject.order.merchantPhone,
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(0, 8, 8, 8.0),
+                          child: Icon(CupertinoIcons.phone_fill, color: AppColors.green00A),
                         ),
-                        textDirection: TextDirection.ltr,
                       ),
                     ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      UrlLaunchers().phoneCallLauncher(
-                        phoneNumber: driverOrderDetailsObject.order.merchantPhone,
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 8, 8.0),
-                      child: Icon(CupertinoIcons.phone_fill, color: AppColors.defaultColor),
-                    ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 25),
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 4, right: 16, left: 16),
-              child: Text('المنتجات', style: Theme.of(context).textTheme.titleMedium),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+              child: CustomText(
+                text: "المنتجات",
+                color: AppColors.black4B,
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
             ),
             ...driverOrderDetailsObject.order.items.map(
               (e) => Padding(
@@ -240,10 +248,10 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   margin: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.blue2Color,
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.defaultColor,
                   ),
-                  child: const RowIconText(icon: Icons.check, text: "قبول"),
+                  child: const RowIconText(icon: Icons.check, text: "قبول الطلب"),
                 ),
               )
               : driverOrderDetailsObject.order.status == 2
@@ -263,33 +271,21 @@ class DriverOrderDetailsScreen extends StatelessWidget {
             });
       },
       onTapCancel: () {
-        DialogHelper.showCustomDialog(
+        showDialog(
           context: context,
-          alertDialog: AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("سبب الرفض", style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 10),
-                CustomTextFormField(
+          builder: (context) {
+            return BlocProvider.value(
+              value: driverOrderDetailsObject.cubit,
+              child: AlertPopUp(
+                alertTitle: "سبب الرفض",
+                content: CustomTextFormField(
                   controller: rejectedController,
                   keyboardType: TextInputType.text,
                   hint: 'اكتب سبب الرفض',
                   textInputAction: TextInputAction.done,
                 ),
-              ],
-            ),
-            actions: [
-              CancelOrderButton(
-                text: "رجوع",
-                onTap: () {
-                  context.pop();
-                },
-              ),
-              CancelOrderButton(
-                text: "رفض",
-                onTap: () {
+                confirmText: "رفض",
+                onButtonClick: () {
                   if (rejectedController.text.isNotEmpty) {
                     driverOrderDetailsObject.cubit
                         .editOrder(
@@ -303,9 +299,12 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                         });
                   }
                 },
+                onButtonCancel: () {
+                  context.pop();
+                },
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -313,30 +312,40 @@ class DriverOrderDetailsScreen extends StatelessWidget {
 }
 
 class PriceDetailsSection extends StatelessWidget {
-  final ClientDriverOrderDetailsObject driverOrderDetailsObject;
-
   const PriceDetailsSection({super.key, required this.driverOrderDetailsObject});
+
+  final ClientDriverOrderDetailsObject driverOrderDetailsObject;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+        color: AppColors.greyFC,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.greyF5),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: CustomText(
+              text: "تفاصيل الطلب",
+              color: AppColors.black4B,
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+            ),
+          ),
           if (driverOrderDetailsObject.order.totalAppliedDiscount > 0) ...[
             OrderDetailsRowItem(
               title: "إجمالي الخصم",
               value: AppConstance.currencyFormat.format(
                 driverOrderDetailsObject.order.totalAppliedDiscount,
               ),
+              valueColor: AppColors.redE7,
             ),
-            const SizedBox(height: 16),
+            AppConstance.horizontalDivider,
           ],
           OrderDetailsRowItem(
             title: 'مبلغ الطلب',
@@ -345,17 +354,19 @@ class PriceDetailsSection extends StatelessWidget {
                   driverOrderDetailsObject.order.discountDiff,
             ),
           ),
-          const SizedBox(height: 16),
+          AppConstance.horizontalDivider,
           OrderDetailsRowItem(
             title: 'التوصيل',
             value: AppConstance.currencyFormat.format(driverOrderDetailsObject.order.shippingPrice),
           ),
-          const SizedBox(height: 16),
+          AppConstance.horizontalDivider,
           OrderDetailsRowItem(
             title: 'الإجمالي',
             value: AppConstance.currencyFormat.format(driverOrderDetailsObject.order.clientPrice),
-            valueColored: true,
+            titleColor: AppColors.defaultColor,
+            valueColor: AppColors.defaultColor,
           ),
+          const SizedBox(height: 10),
         ],
       ),
     );

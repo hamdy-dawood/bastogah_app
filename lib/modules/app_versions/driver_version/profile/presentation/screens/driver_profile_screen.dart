@@ -1,3 +1,4 @@
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/default_flushbar.dart';
 import 'package:bastoga/core/components/loader.dart';
 import 'package:bastoga/core/components/warning_alert_pop_up.dart';
@@ -5,6 +6,7 @@ import 'package:bastoga/core/helpers/context_extention.dart';
 import 'package:bastoga/core/helpers/dialog_helper.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/cubit/client_home_cubit.dart';
+import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/row_icon_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,28 +38,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leadingWidth: 100,
-        leading: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: SizedBox(height: 40, child: Image.asset(ImageManager.logo)),
-        ),
-        title: const Text("حسابي"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              FirebaseUnsubscribe.unsubscribeFromTopics();
-              Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
-                context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: (route) => false);
-                Caching.clearAllData();
-              });
-            },
-            icon: const Icon(Icons.power_settings_new) /*SvgPicture.asset(
-              ImageManager.shoppingCartIcon,
-            )*/,
-          ),
-        ],
-      ),
+      backgroundColor: AppColors.white,
       bottomNavigationBar: const DriverDefaultBottomNav(),
       body: BlocBuilder<DriverHomeCubit, DriverHomeStates>(
         builder: (context, state) {
@@ -65,53 +46,94 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(
-                      '${AppConstance.imagePathApi}${context.read<DriverHomeCubit>().profile!.image}',
+                  const SizedBox(height: 50),
+                  SizedBox.fromSize(
+                    size: const Size.fromRadius(50),
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(
+                        "${AppConstance.imagePathApi}${context.read<DriverHomeCubit>().profile!.image}",
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      context.read<DriverHomeCubit>().profile!.displayName,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(letterSpacing: 1.5),
-                    ),
+                  CustomText(
+                    text: context.read<DriverHomeCubit>().profile!.displayName,
+                    color: AppColors.black1A,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22,
+                    maxLines: 3,
                   ),
-                  Text(
-                    '@${context.read<DriverHomeCubit>().profile!.username}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                    textDirection: TextDirection.ltr,
+                  const SizedBox(height: 10),
+                  CustomText(
+                    text: "@${context.read<DriverHomeCubit>().profile!.username}",
+                    color: AppColors.black4B,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    maxLines: 3,
+                  ),
+                  CustomText(
+                    text: "${context.read<DriverHomeCubit>().profile!.phone}",
+                    color: AppColors.black4B,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    maxLines: 3,
                   ),
                   const SizedBox(height: 32),
-                  Row(children: [Text('بياناتي', style: Theme.of(context).textTheme.bodyLarge)]),
+                  // ProfileInfoRowItem(
+                  //   iconPath: ImageManager.driverMoneyIcon,
+                  //   value:
+                  //       'سعر التوصيل (${context.read<DriverHomeCubit>().profile!.driverShippingPrice} د)',
+                  // ),
+                  // AppConstance.horizontalDivider,
+                  // ProfileInfoRowItem(
+                  //   iconPath: ImageManager.bluetoothIcon,
+                  //   value: "اعدادات الطابعة",
+                  //   onTap: () {
+                  //     context.pushNamed(Routes.printerScreen);
+                  //   },
+                  // ),
                   ProfileInfoRowItem(
-                    iconPath: ImageManager.emailIcon,
-                    value: context.read<DriverHomeCubit>().profile!.username,
+                    iconPath: ImageManager.card,
+                    value: "المحفظة والأرباح",
+                    onTap: () {},
                   ),
-                  AppConstance.horizontalDivider,
                   ProfileInfoRowItem(
-                    iconPath: ImageManager.phoneIcon,
-                    value: context.read<DriverHomeCubit>().profile!.phone,
+                    iconPath: ImageManager.help,
+                    value: "المساعدة والدعم",
+                    onTap: () {},
                   ),
-                  AppConstance.horizontalDivider,
-                  ProfileInfoRowItem(
-                    iconPath: ImageManager.driverMoneyIcon,
-                    value:
-                        'سعر التوصيل (${context.read<DriverHomeCubit>().profile!.driverShippingPrice} د)',
-                  ),
-                  AppConstance.horizontalDivider,
-                  ProfileInfoRowItem(
-                    iconPath: ImageManager.bluetoothIcon,
-                    value: "اعدادات الطابعة",
+                  SizedBox(height: 20),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(16),
                     onTap: () {
-                      context.pushNamed(Routes.printerScreen);
+                      FirebaseUnsubscribe.unsubscribeFromTopics();
+                      Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
+                        context.pushNamedAndRemoveUntil(
+                          Routes.loginScreen,
+                          predicate: (route) => false,
+                        );
+                        Caching.clearAllData();
+                      });
                     },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.redE7.withValues(alpha: 0.5)),
+                      ),
+                      child: RowIconText(
+                        svgIcon: ImageManager.logout,
+                        text: "تسجيل الخروج",
+                        fontColor: AppColors.redE7,
+                        height: 20,
+                      ),
+                    ),
                   ),
-                  AppConstance.horizontalDivider,
+                  SizedBox(height: 20),
                   BlocProvider.value(
                     value: context.read<ClientHomeCubit>(),
                     child: BlocConsumer<ClientHomeCubit, ClientHomeStates>(
@@ -140,10 +162,8 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                         }
                       },
                       builder: (context, state) {
-                        return ProfileInfoRowItem(
-                          iconPath: ImageManager.disableAccount,
-                          value: 'تعطيل الحساب',
-                          valueColor: AppColors.redE7,
+                        return InkWell(
+                          borderRadius: BorderRadius.circular(16),
                           onTap: () {
                             DialogHelper.showCustomDialog(
                               context: context,
@@ -152,15 +172,24 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                                 description: 'هل أنت متأكد من تعطيل الحساب؟',
                                 btnContent: 'تعطيل الحساب',
                                 onPress: () {
-                                  // context.read<MoreCubit>().updateProfile(
-                                  //   context: context,
-                                  //   active: false,
-                                  // );
                                   context.read<ClientHomeCubit>().disableAccount();
                                 },
                               ),
                             );
                           },
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: AppColors.redE7.withValues(alpha: 0.5)),
+                            ),
+                            child: RowIconText(
+                              svgIcon: ImageManager.disableAccount,
+                              text: "تعطيل الحساب",
+                              fontColor: AppColors.redE7,
+                              height: 20,
+                            ),
+                          ),
                         );
                       },
                     ),

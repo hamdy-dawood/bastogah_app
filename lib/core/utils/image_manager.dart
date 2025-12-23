@@ -84,4 +84,7 @@ class ImageManager {
   static const String search = '$svgPath/search.svg';
   static const String refresh = '$svgPath/refresh.svg';
   static const String arrowLeft = '$svgPath/arrow_left.svg';
+  static const String logout = '$svgPath/logout.svg';
+  static const String card = '$svgPath/card.svg';
+  static const String help = '$svgPath/help.svg';
 }

@@ -303,7 +303,7 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                       value: AppConstance.currencyFormat.format(
                         merchantOrderDetailsObject.order.clientPrice,
                       ),
-                      valueColored: true,
+                      valueColor: AppColors.defaultColor,
                     ),
                   ],
                 ),

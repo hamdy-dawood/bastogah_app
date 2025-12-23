@@ -44,7 +44,7 @@ class AppConstance {
     thickness: 1,
     indent: 0,
     endIndent: 0,
-    color: AppColors.black4B.withValues(alpha: 0.2),
+    color: AppColors.greyF5,
     height: 15,
   );
 

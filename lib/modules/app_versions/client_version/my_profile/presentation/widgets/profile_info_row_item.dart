@@ -1,5 +1,7 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileInfoRowItem extends StatelessWidget {
   final String iconPath;
@@ -20,11 +22,25 @@ class ProfileInfoRowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(16),
       highlightColor: WidgetStateColor.transparent,
       splashFactory: NoSplash.splashFactory,
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.greyF5),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.grey9A.withValues(alpha: 0.2),
+              blurRadius: 3,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -32,21 +48,29 @@ class ProfileInfoRowItem extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    height: 22,
-                    width: 22,
-                    child: SvgPicture.asset(iconPath, color: valueColor ?? const Color(0xff6E6E6E)),
-                  ),
-                  const SizedBox(width: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      value,
-                      textDirection: TextDirection.ltr,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: valueColor ?? Colors.black.withValues(alpha: 0.5),
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.defaultColor.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: SvgIcon(
+                        icon: iconPath,
+                        color: valueColor ?? AppColors.defaultColor,
+                        height: 12,
                       ),
                     ),
+                  ),
+                  const SizedBox(width: 10),
+                  CustomText(
+                    text: value,
+                    color: AppColors.black1A,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    maxLines: 3,
                   ),
                 ],
               ),
@@ -54,11 +78,7 @@ class ProfileInfoRowItem extends StatelessWidget {
             widget ?? const SizedBox(),
             const SizedBox(width: 5),
             onTap != null
-                ? Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 18,
-                  color: Colors.black.withValues(alpha: 0.5),
-                )
+                ? Icon(Icons.arrow_forward_ios_outlined, size: 18, color: AppColors.black4B)
                 : const SizedBox(),
           ],
         ),

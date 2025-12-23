@@ -130,7 +130,7 @@ class _DriverOrdersCardViewState extends State<DriverOrdersCardView> {
                                   textInputAction: TextInputAction.done,
                                 ),
                                 confirmText: "رفض",
-                                onButtonClick: () async {
+                                onButtonClick: () {
                                   if (rejectedController.text.isNotEmpty) {
                                     widget.cubit
                                         .editOrder(

@@ -13,7 +13,7 @@ class AppVersionWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Text(
-            'v${snapshot.data?.version}',
+            "الإصدار ${snapshot.data?.version}",
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(color: Colors.grey, fontSize: fontSize),

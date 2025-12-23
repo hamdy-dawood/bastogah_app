@@ -1,3 +1,6 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
+import 'package:bastoga/core/utils/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,21 +33,30 @@ class _DriverReportsScreenState extends State<DriverReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         leadingWidth: 100,
         leading: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
+          padding: const EdgeInsets.only(right: 16),
           child: Image.asset(ImageManager.logo),
         ),
-        title: const Text('تقارير'),
-        // actions: [
-        //   IconButton(
-        //     pressed: () {},
-        //     icon: SvgPicture.asset(
-        //       ImageManager.notificationPinIcon,
-        //     ),
-        //   ),
-        // ],
+        title: CustomText(
+          text: "التقارير",
+          color: AppColors.black1A,
+          fontWeight: FontWeight.w700,
+          fontSize: 18,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgIcon(
+              icon: ImageManager.notificationIcon,
+              color: AppColors.black1A,
+              height: 22,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const DriverDefaultBottomNav(),
       body: DefaultTabController(
@@ -55,31 +67,42 @@ class _DriverReportsScreenState extends State<DriverReportsScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text('الدخل', style: Theme.of(context).textTheme.titleMedium),
+                child: CustomText(
+                  text: "الدخل",
+                  color: AppColors.black1A,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 12, right: 16, left: 16),
                 decoration: BoxDecoration(
-                  color: AppColors.greyColor.withValues(alpha: 0.1),
+                  color: AppColors.defaultColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                height: 40,
+                height: 45,
                 child: TabBar(
                   indicator: BoxDecoration(
-                    color: AppColors.black,
+                    color: AppColors.defaultColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   labelPadding: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
                   indicatorPadding: EdgeInsets.zero,
-                  unselectedLabelColor: AppColors.black.withValues(alpha: 0.6),
-                  unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium,
+                  unselectedLabelColor: AppColors.defaultColor,
+                  unselectedLabelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: AppConstance.appFomFamily,
+                  ),
                   labelColor: Colors.white,
-                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: AppConstance.appFomFamily,
+                  ),
                   overlayColor: const WidgetStatePropertyAll(Colors.transparent),
                   onTap: (index) {
-                    // tabIndex = index;
-                    // print('TAB INDEX ======= $tabIndex');
                     context.read<DriverReportsCubit>().getChartReport(format: index + 1);
                   },
                   tabs:
@@ -90,16 +113,8 @@ class _DriverReportsScreenState extends State<DriverReportsScreen> {
                                 height: double.infinity,
                                 margin: const EdgeInsets.symmetric(horizontal: 0),
                                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                decoration: BoxDecoration(
-                                  // color: AppColors.greyColor.withValues(alpha:0.1),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(e),
-                                  ),
-                                ),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                                child: Center(child: Text(e)),
                               ),
                             ),
                           )
@@ -176,14 +191,13 @@ class _DriverReportsScreenState extends State<DriverReportsScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('احصائيات الشهر', style: Theme.of(context).textTheme.titleMedium),
+                    CustomText(
+                      text: "احصائيات الشهر",
+                      color: AppColors.defaultColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
                     const MonthSelection(),
-                    // TextContainer(
-                    //   text: 'الشهر الحالي',
-                    //   buttonColor: AppColors.greyColor.withValues(alpha:0.2),
-                    //   fontColor: AppColors.defaultColor,
-                    //   borderRadius: 5,
-                    // ),
                   ],
                 ),
               ),
@@ -271,7 +285,7 @@ class _MonthSelectionState extends State<MonthSelection> {
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppColors.black.withValues(alpha: 0.1),
+            color: AppColors.greyF5,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Theme(

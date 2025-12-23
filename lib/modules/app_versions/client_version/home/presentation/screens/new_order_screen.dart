@@ -214,7 +214,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                     value: AppConstance.currencyFormat.format(
                                       widget.newOrderObject.itemsPrice + CityField.cityPrice!,
                                     ),
-                                    valueColored: true,
+                                    valueColor: AppColors.defaultColor,
                                   ),
                                 ],
                               )

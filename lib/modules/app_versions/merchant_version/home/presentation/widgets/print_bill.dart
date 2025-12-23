@@ -72,7 +72,7 @@ class _AppBillsState extends State<AppBills> {
             OrderDetailsRowItem(
               title: "الاجمـــــــالي",
               value: AppConstance.currencyFormat.format(widget.order.clientPrice),
-              valueColored: true,
+              valueColor: AppColors.defaultColor,
             ),
             const SizedBox(height: 16),
             GestureDetector(

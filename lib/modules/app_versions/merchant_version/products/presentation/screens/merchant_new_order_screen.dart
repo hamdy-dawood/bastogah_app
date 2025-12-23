@@ -149,7 +149,7 @@ class _MerchantNewOrderScreenState extends State<MerchantNewOrderScreen> {
                                         widget.newOrderObject.itemsPrice +
                                             MerchantCityField.cityPrice!,
                                       ),
-                                      valueColored: true,
+                                      valueColor: AppColors.defaultColor,
                                     ),
                                   ],
                                 )

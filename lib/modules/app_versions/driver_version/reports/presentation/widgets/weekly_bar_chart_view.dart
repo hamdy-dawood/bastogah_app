@@ -12,8 +12,6 @@ class WeeklyBarChartView extends StatefulWidget {
 
   final Color barBackgroundColor = AppColors.black.withValues(alpha: 0.1);
 
-  // final Color touchedBarColor = AppColors.greenColor;
-
   @override
   State<StatefulWidget> createState() => WeeklyBarChartViewState();
 }
@@ -54,7 +52,7 @@ class WeeklyBarChartViewState extends State<WeeklyBarChartView> {
     if (weekDay == currentDay) {
       return AppColors.defaultColor;
     } else {
-      return AppColors.defaultColor.withValues(alpha: 0.3);
+      return AppColors.defaultColor;
     }
   }
 
@@ -180,35 +178,8 @@ class WeeklyBarChartViewState extends State<WeeklyBarChartView> {
           tooltipHorizontalAlignment: FLHorizontalAlignment.center,
           tooltipMargin: 0,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            // String weekDay;
-            // switch (group.x) {
-            //   case 0:
-            //     weekDay = 'الجمعة';
-            //     break;
-            //   case 1:
-            //     weekDay = 'السبت';
-            //     break;
-            //   case 2:
-            //     weekDay = 'الأحد';
-            //     break;
-            //   case 3:
-            //     weekDay = 'الإثنين';
-            //     break;
-            //   case 4:
-            //     weekDay = 'الثلاثاء';
-            //     break;
-            //   case 5:
-            //     weekDay = 'الأربعاء';
-            //     break;
-            //   case 6:
-            //     weekDay = 'الخميس';
-            //     break;
-            //   default:
-            //     throw Error();
-            // }
             return BarTooltipItem(
-              // '$weekDay\n',
-              '',
+              "",
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
               children: <TextSpan>[
                 TextSpan(
@@ -275,10 +246,6 @@ class WeeklyBarChartViewState extends State<WeeklyBarChartView> {
         text = Text('', style: style);
         break;
     }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      // space: 16,
-      child: text,
-    );
+    return SideTitleWidget(axisSide: meta.axisSide, child: text);
   }
 }

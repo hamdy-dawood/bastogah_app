@@ -1,5 +1,6 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class RowIconText extends StatelessWidget {
   const RowIconText({
@@ -9,6 +10,7 @@ class RowIconText extends StatelessWidget {
     this.fontColor,
     this.svgIcon,
     this.widthSpace,
+    this.height = 10,
   });
 
   final String? svgIcon;
@@ -16,6 +18,7 @@ class RowIconText extends StatelessWidget {
   final String text;
   final Color? fontColor;
   final double? widthSpace;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +27,16 @@ class RowIconText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         svgIcon != null
-            ? SvgPicture.asset(svgIcon!, color: fontColor ?? Colors.white)
+            ? SvgIcon(icon: svgIcon!, color: fontColor ?? Colors.white, height: height)
             : Icon(icon, color: fontColor ?? Colors.white),
         SizedBox(width: widthSpace ?? 10),
         Padding(
           padding: const EdgeInsets.only(top: 4.0),
-          child: Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(color: fontColor ?? Colors.white),
+          child: CustomText(
+            text: text,
+            color: fontColor ?? Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
           ),
         ),
       ],

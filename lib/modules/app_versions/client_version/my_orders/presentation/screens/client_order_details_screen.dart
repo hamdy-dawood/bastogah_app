@@ -299,7 +299,7 @@ class PriceDetailsSection extends StatelessWidget {
           OrderDetailsRowItem(
             title: 'الإجمالي',
             value: AppConstance.currencyFormat.format(driverOrderDetailsObject.order.clientPrice),
-            valueColored: true,
+            valueColor: AppColors.defaultColor,
           ),
         ],
       ),

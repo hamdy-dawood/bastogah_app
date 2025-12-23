@@ -17,33 +17,18 @@ class DetailsFinishBottomSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // InkWell(
-            //   onTap: onTapFinish,
-            //   child: Container(
-            //     padding: const EdgeInsets.all(12),
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(8),
-            //       color: AppColors.green2Color,
-            //     ),
-            //     child: const RowIconText(
-            //       icon: CupertinoIcons.check_mark,
-            //       text: "إنهاء (تم التسليم للعميل)",
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(height: 10),
             InkWell(
               onTap: onTapCancel,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColors.grey4Color,
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.greyF5,
                 ),
                 child: const RowIconText(
                   icon: Icons.close,
                   text: "إلغاء الطلب",
-                  fontColor: AppColors.grey2Color,
+                  fontColor: AppColors.redE7,
                 ),
               ),
             ),
