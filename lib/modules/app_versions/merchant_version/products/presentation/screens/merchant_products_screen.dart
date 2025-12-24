@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:bastoga/core/components/bottom_nav_bar/merchant_default_bottom_nav.dart';
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/default_emit_loading.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
 import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_cubit.dart';
@@ -55,38 +57,59 @@ class _MerchantProductsScreenState extends State<MerchantProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.white,
         leadingWidth: 100,
         leading: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
+          padding: const EdgeInsets.only(right: 16),
           child: Image.asset(ImageManager.logo),
         ),
-        title: const Text('المنتجات'),
+        title: CustomText(
+          text: "المنتجات",
+          color: AppColors.black1A,
+          fontWeight: FontWeight.w700,
+          fontSize: 18,
+        ),
         actions: [
-          BlocProvider.value(
-            value: context.read<MerchantProductsCubit>(),
-            child: const MerchantCartIconWidget(),
+          IconButton(
+            onPressed: () {},
+            icon: SvgIcon(
+              icon: ImageManager.notificationIcon,
+              color: AppColors.black1A,
+              height: 22,
+            ),
           ),
         ],
       ),
       body: Column(
         children: [
+          SizedBox(height: 20),
           BlocBuilder<MerchantProductsCubit, MerchantProductsStates>(
             builder: (context, state) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16.0),
                 child: CustomTextFormField(
+                  isDense: true,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
                   controller: searchProductController,
-                  hint: 'ابحث...',
-                  keyboardType: TextInputType.text,
-                  prefixIcon: SvgPicture.asset(ImageManager.search),
-                  onFieldSubmitted: (v) {
+                  hint: "ابحث...",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SvgIcon(icon: ImageManager.search, color: AppColors.grey9A),
+                  ),
+                  onFieldSubmitted: (value) {
                     context.read<MerchantProductsCubit>().getProducts(
                       page: 0,
                       productCategory: productCategory,
                       search: searchProductController.text,
                     );
                   },
+                  validator: (value) {
+                    return null;
+                  },
+                  isLastInput: true,
+                  fontSize: 16,
                 ),
               );
             },
@@ -145,12 +168,13 @@ class _MerchantProductsScreenState extends State<MerchantProductsScreen> {
                             child: TabBar(
                               isScrollable: true,
                               indicator: BoxDecoration(
-                                color: AppColors.black,
-                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.defaultColor,
+                                borderRadius: BorderRadius.circular(20),
                               ),
+
                               labelPadding: EdgeInsets.zero,
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                              indicatorPadding: const EdgeInsets.symmetric(horizontal: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              indicatorPadding: const EdgeInsets.only(right: 6, left: 6, bottom: 3),
                               unselectedLabelColor: AppColors.black.withValues(alpha: 0.6),
                               unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium,
                               labelColor: Colors.white,
@@ -175,23 +199,26 @@ class _MerchantProductsScreenState extends State<MerchantProductsScreen> {
                                   context
                                       .read<MerchantProductsCubit>()
                                       .productCategories!
-                                      .map(
-                                        (e) => Tab(
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                        return Tab(
                                           child: Container(
-                                            height: double.infinity,
                                             margin: const EdgeInsets.symmetric(horizontal: 6),
                                             padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                             decoration: BoxDecoration(
-                                              color: AppColors.greyColor.withValues(alpha: 0.1),
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius: BorderRadius.circular(20),
+                                              border: Border.all(color: AppColors.greyE0),
                                             ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(top: 4.0),
-                                              child: Center(child: Text(e.name)),
+                                            child: Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                                child: Text(entry.value.name),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )
+                                        );
+                                      })
                                       .toList(),
                             ),
                           ),

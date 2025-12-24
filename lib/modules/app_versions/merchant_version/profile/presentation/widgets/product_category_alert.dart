@@ -94,9 +94,14 @@ class ProductCategoryAlert extends StatelessWidget {
               }
               return TextButton(
                 onPressed: () {
-                  isEdit
-                      ? cubit.editProductCategory(productCategoryId: productCategoryId)
-                      : cubit.addProductCategory();
+                  if (cubit.formKey.currentState!.validate()) {
+                    isEdit
+                        ? cubit.editProductCategory(
+                          productCategoryId: productCategoryId,
+                          name: cubit.nameController.text,
+                        )
+                        : cubit.addProductCategory(name: cubit.nameController.text);
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   EasyLocalization.ensureInitialized();
 
-  await Firebase.initializeApp(name: 'bastoga', options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(name: 'bastoga', options: DefaultFirebaseOptions.currentPlatform);
 
   setupGetIt();
   await Caching.init();

@@ -49,38 +49,38 @@ class MerchantProfileCubit extends Cubit<MerchantProfileStates> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
 
-  Future addProductCategory() async {
-    if (formKey.currentState!.validate()) {
-      emit(AddProductCategoryLoadingState());
+  Future addProductCategory({required String name}) async {
+    // if (formKey.currentState!.validate()) {
+    emit(AddProductCategoryLoadingState());
 
-      final Either<ServerError, String> response = await baseMerchantProfileRepository
-          .addProductCategory(name: nameController.text);
+    final Either<ServerError, String> response = await baseMerchantProfileRepository
+        .addProductCategory(name: name);
 
-      response.fold(
-        (l) => emit(AddProductCategoryFailedState(message: l.errorMessageModel.message)),
-        (r) {
-          emit(AddProductCategorySuccessState());
-        },
-      );
-    }
+    response.fold(
+      (l) => emit(AddProductCategoryFailedState(message: l.errorMessageModel.message)),
+      (r) {
+        emit(AddProductCategorySuccessState());
+      },
+    );
+    // }
   }
 
   //===========================  EDIT PRODUCT CATEGORY  ===========================//
 
-  Future editProductCategory({required String productCategoryId}) async {
-    if (formKey.currentState!.validate()) {
-      emit(AddProductCategoryLoadingState());
+  Future editProductCategory({required String productCategoryId, required String name}) async {
+    // if (formKey.currentState!.validate()) {
+    emit(AddProductCategoryLoadingState());
 
-      final Either<ServerError, String> response = await baseMerchantProfileRepository
-          .editProductCategory(productCategoryId: productCategoryId, name: nameController.text);
+    final Either<ServerError, String> response = await baseMerchantProfileRepository
+        .editProductCategory(productCategoryId: productCategoryId, name: name);
 
-      response.fold(
-        (l) => emit(AddProductCategoryFailedState(message: l.errorMessageModel.message)),
-        (r) {
-          emit(AddProductCategorySuccessState());
-        },
-      );
-    }
+    response.fold(
+      (l) => emit(AddProductCategoryFailedState(message: l.errorMessageModel.message)),
+      (r) {
+        emit(AddProductCategorySuccessState());
+      },
+    );
+    // }
   }
 
   //===========================  DELETE PRODUCT CATEGORY  ===========================//
@@ -97,6 +97,48 @@ class MerchantProfileCubit extends Cubit<MerchantProfileStates> {
         emit(DeleteProductCategorySuccessState());
       },
     );
+  }
+
+  Future saveCategories({
+    required List<String> namesToAdd,
+    required Map<String, String> namesToEdit,
+  }) async {
+    emit(AddProductCategoryLoadingState());
+
+    bool hasError = false;
+    String errorMessage = "";
+
+    // Edit existing
+    for (var entry in namesToEdit.entries) {
+      final result = await baseMerchantProfileRepository.editProductCategory(
+        productCategoryId: entry.key,
+        name: entry.value,
+      );
+      result.fold((l) {
+        hasError = true;
+        errorMessage = l.errorMessageModel.message;
+      }, (r) {});
+    }
+
+    // Add new
+    for (var name in namesToAdd) {
+      if (name.trim().isEmpty) continue;
+      final result = await baseMerchantProfileRepository.addProductCategory(name: name);
+      result.fold((l) {
+        hasError = true;
+        errorMessage = l.errorMessageModel.message;
+      }, (r) {});
+    }
+
+    if (hasError) {
+      emit(
+        AddProductCategoryFailedState(
+          message: errorMessage.isNotEmpty ? errorMessage : "حدث خطأ ما",
+        ),
+      );
+    } else {
+      emit(AddProductCategorySuccessState());
+    }
   }
 
   @override

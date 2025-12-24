@@ -19,7 +19,7 @@ class CustomElevated extends StatelessWidget {
     this.press,
     this.textColor = Colors.white,
     this.btnColor,
-    this.hSize = 50,
+    this.hSize = 45,
     this.wSize = 1,
     this.fontSize = 16,
     this.borderRadius = 8,

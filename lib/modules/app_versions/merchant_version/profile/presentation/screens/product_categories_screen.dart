@@ -5,10 +5,17 @@ import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/cubit/merchant_profile_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/widgets/delete_product_category_alert.dart';
-import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/widgets/product_category_alert.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
+
+class CategoryItem {
+  String? id;
+  String originalName;
+  TextEditingController controller;
+
+  CategoryItem({this.id, required this.controller, this.originalName = ""});
+}
 
 class ProductCategoriesScreen extends StatefulWidget {
   const ProductCategoriesScreen({super.key});
@@ -18,6 +25,8 @@ class ProductCategoriesScreen extends StatefulWidget {
 }
 
 class _ProductCategoriesScreenState extends State<ProductCategoriesScreen> {
+  List<CategoryItem> _uiCategories = [];
+
   @override
   void initState() {
     context.read<MerchantProfileCubit>().getProductCategories();
@@ -53,95 +62,183 @@ class _ProductCategoriesScreenState extends State<ProductCategoriesScreen> {
           fontSize: 16,
         ),
       ),
-      body: BlocBuilder<MerchantProfileCubit, MerchantProfileStates>(
+      body: BlocConsumer<MerchantProfileCubit, MerchantProfileStates>(
+        listener: (context, state) {
+          if (state is GetProductCategoriesSuccessState) {
+            final categories = context.read<MerchantProfileCubit>().productCategories ?? [];
+            _uiCategories =
+                categories
+                    .map(
+                      (e) => CategoryItem(
+                        id: e.id,
+                        controller: TextEditingController(text: e.name),
+                        originalName: e.name, // Store original name
+                      ),
+                    )
+                    .toList();
+          } else if (state is AddProductCategorySuccessState) {
+            showDefaultFlushBar(
+              context: context,
+              color: AppColors.green2Color.withValues(alpha: 0.6),
+              messageText: "تم الحفظ بنجاح",
+              notificationType: ToastificationType.success,
+            );
+            context.read<MerchantProfileCubit>().getProductCategories();
+          } else if (state is AddProductCategoryFailedState) {
+            showDefaultFlushBar(
+              context: context,
+              color: AppColors.redE7,
+              messageText: state.message,
+            );
+          }
+        },
         builder: (context, state) {
           final cubit = context.read<MerchantProfileCubit>();
-          if (state is GetProductCategoriesLoadingState) {
+
+          if (state is GetProductCategoriesLoadingState && _uiCategories.isEmpty) {
             return const Center(child: DefaultCircleProgressIndicator());
           }
-          if (state is GetProductCategoriesFailedState) {
-            return CustomText(
-              text: state.message,
-              color: AppColors.redE7,
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
+
+          if (state is GetProductCategoriesFailedState && _uiCategories.isEmpty) {
+            return Center(
+              child: CustomText(
+                text: state.message,
+                color: AppColors.redE7,
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+              ),
             );
           }
-          if (cubit.productCategories != null && cubit.productCategories!.isNotEmpty) {
-            return DefaultListView(
-              refresh: (page) async {},
-              itemBuilder:
-                  (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ListTile(
-                      tileColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(color: AppColors.black.withValues(alpha: 0.2)),
+
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: CustomText(
+                          text: "تصنيف المتجر",
+                          fontSize: 14,
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      title: Text(
-                        cubit.productCategories![index].name,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _uiCategories.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextFormField(
+                                  controller: _uiCategories[index].controller,
+                                  hint: "اسم التصنيف",
+                                ),
+                              ),
+                              if (_uiCategories[index].id == null)
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _uiCategories.removeAt(index);
+                                    });
+                                  },
+                                  icon: const Icon(Icons.delete_outline, color: Colors.grey),
+                                ),
+                              if (_uiCategories[index].id != null)
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return DeleteProductCategoryAlert(
+                                          cubit: cubit,
+                                          productCategoryId: _uiCategories[index].id!,
+                                          productCategoryName: _uiCategories[index].controller.text,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: const Icon(Icons.delete_outline, color: Colors.grey),
+                                ),
+                            ],
+                          );
+                        },
                       ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return ProductCategoryAlert(
-                                    cubit: context.read<MerchantProfileCubit>(),
-                                    isEdit: true,
-                                    productCategoryId: cubit.productCategories![index].id,
-                                    editName: cubit.productCategories![index].name,
-                                  );
-                                },
-                              );
-                            },
-                            child: const Icon(Icons.edit, size: 20, color: Colors.black54),
+                      const SizedBox(height: 16),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _uiCategories.add(CategoryItem(controller: TextEditingController()));
+                          });
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: AppColors.greyF5,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          const SizedBox(width: 16),
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return DeleteProductCategoryAlert(
-                                    cubit: cubit,
-                                    productCategoryId: cubit.productCategories![index].id,
-                                    productCategoryName: cubit.productCategories![index].name,
-                                  );
-                                },
-                              );
-                            },
-                            child: const Icon(CupertinoIcons.delete, size: 20, color: Colors.red),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.add, color: AppColors.black1A, size: 20),
+                              const SizedBox(width: 8),
+                              CustomText(
+                                text: "إضافة تصنيف اخر",
+                                color: AppColors.black1A,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-              length: cubit.productCategories!.length,
-              hasMore: false,
-              onRefreshCall: () => cubit.getProductCategories(),
-            );
-          } else {
-            return NoData(refresh: () => cubit.getProductCategories());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.defaultColor,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return ProductCategoryAlert(cubit: context.read<MerchantProfileCubit>());
-            },
+                ),
+              ),
+              // Bottom Confirm Button
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child:
+                    state is AddProductCategoryLoadingState
+                        ? const Center(child: DefaultCircleProgressIndicator())
+                        : CustomElevated(
+                          text: "حفظ",
+                          press: () {
+                            List<String> namesToAdd = [];
+                            Map<String, String> namesToEdit = {};
+
+                            for (var item in _uiCategories) {
+                              String currentName = item.controller.text.trim();
+                              if (currentName.isEmpty) continue;
+
+                              if (item.id == null) {
+                                namesToAdd.add(currentName);
+                              } else {
+                                if (currentName != item.originalName) {
+                                  namesToEdit[item.id!] = currentName;
+                                }
+                              }
+                            }
+
+                            if (namesToAdd.isEmpty && namesToEdit.isEmpty) {
+                              return;
+                            }
+
+                            cubit.saveCategories(namesToAdd: namesToAdd, namesToEdit: namesToEdit);
+                          },
+                        ),
+              ),
+            ],
           );
         },
-        child: const Icon(Icons.add),
       ),
     );
   }
