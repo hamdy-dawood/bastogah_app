@@ -1,4 +1,4 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -93,7 +93,13 @@ class MerchantProductCardView extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColors.grey5Color),
-            boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.grey9A.withValues(alpha: 0.2),
+                spreadRadius: 1,
+                blurRadius: 5,
+              ),
+            ],
           ),
           child: Column(
             children: [

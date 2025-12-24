@@ -4,7 +4,7 @@ import 'package:bastoga/core/caching/shared_prefs.dart';
 import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/default_emit_loading.dart';
 import 'package:bastoga/core/components/svg_icons.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/helpers/dialog_helper.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:flutter/foundation.dart';

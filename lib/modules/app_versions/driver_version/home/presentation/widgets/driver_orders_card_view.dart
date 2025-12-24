@@ -5,7 +5,7 @@ import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/default_text_form_field.dart';
 import 'package:bastoga/core/components/svg_icons.dart';
 import 'package:bastoga/core/external/url_launcher.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,13 @@ class _DriverOrdersCardViewState extends State<DriverOrdersCardView> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.grey9A.withValues(alpha: 0.2),
+              spreadRadius: 1,
+              blurRadius: 1,
+            ),
+          ],
         ),
         child: Column(
           children: [

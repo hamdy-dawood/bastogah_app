@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/controllers/navigator_bloc/navigator_cubit.dart';
-import 'core/helpers/context_extention.dart';
+import 'core/helpers/context_extension.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 import 'core/utils/theme.dart';

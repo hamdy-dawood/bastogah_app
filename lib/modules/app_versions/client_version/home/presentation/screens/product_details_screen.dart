@@ -1,5 +1,5 @@
 import 'package:bastoga/core/components/components.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/cubit/client_home_cubit.dart';

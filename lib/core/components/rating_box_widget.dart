@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
+
 class RatingBoxWidget extends StatelessWidget {
   final Color color;
   final String rating;
@@ -13,7 +15,9 @@ class RatingBoxWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
-        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+        boxShadow: [
+          BoxShadow(color: AppColors.grey9A.withValues(alpha: 0.2), spreadRadius: 1, blurRadius: 1),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

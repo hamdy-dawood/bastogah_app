@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
@@ -55,7 +55,7 @@ class SheetHelper {
                         // ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withValues(alpha: 0.2),
+                            color: AppColors.grey9A.withValues(alpha: 0.2),
                             blurRadius: 5.0, // soften the shadow
                             spreadRadius: 0.0, //extend the shadow
                             offset: const Offset(

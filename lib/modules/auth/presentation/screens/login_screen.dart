@@ -3,7 +3,7 @@ import 'package:bastoga/core/caching/shared_prefs.dart';
 import 'package:bastoga/core/components/app_version_widget.dart';
 import 'package:bastoga/core/components/components.dart';
 import 'package:bastoga/core/components/custom_text.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:flutter/material.dart';

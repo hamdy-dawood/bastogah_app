@@ -1,5 +1,6 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/orders.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/domain/entities/merchant_order_details_object.dart';
@@ -30,7 +31,13 @@ class MerchantOrdersCardView extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
-          boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 5)],
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.grey9A.withValues(alpha: 0.2),
+              spreadRadius: 4,
+              blurRadius: 5,
+            ),
+          ],
         ),
         child: Column(
           children: [

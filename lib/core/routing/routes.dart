@@ -4,10 +4,12 @@ class Routes {
   static const String forgetPassword = '/forgetPassword';
   static const String confirmOtpScreen = '/confirmOtpScreen';
   static const String registerOtpScreen = '/registerOtpScreen';
-
   static const String signUpScreen = '/signUpScreen';
 
-  // ============= CLIENT ROUTES ============== //
+  static const String supportScreen = '/supportScreen';
+
+  // ========================= CLIENT ========================== //
+
   static const String clientHomeScreen = '/clientHomeScreen';
   static const String discountMerchantsScreen = '/discountMerchantsScreen';
   static const String clientOrdersScreen = '/clientOrdersScreen';
@@ -22,13 +24,16 @@ class Routes {
   static const String clientOrderDetailsScreen = 'myOrderDetailsScreen';
   static const String offerDetailsScreen = 'offerDetailsScreen';
 
-  // ================= DRIVER ROUTES ==================== //
+  // ========================= DRIVER ========================== //
+
   static const String driverHomeScreen = '/driverHomeScreen';
   static const String driverReportsScreen = '/driverReportsScreen';
   static const String driverProfileScreen = '/driverProfileScreen';
   static const String driverOrderDetailsScreen = 'driverOrderDetailsScreen';
+  static const String driverDuesScreen = 'driverDuesScreen';
 
-  // ============== MERCHANT ROUTES ===================== //
+  // ========================= MERCHANT ========================== //
+
   static const String merchantHomeScreen = '/merchantHomeScreen';
   static const String merchantProductsScreen = '/merchantProductsScreen';
   static const String merchantRequestDriver = '/merchantRequestDriver';

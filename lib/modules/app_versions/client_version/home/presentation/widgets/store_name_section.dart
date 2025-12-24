@@ -1,3 +1,4 @@
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,13 @@ class StoreNameSection extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
-          boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.grey9A.withValues(alpha: 0.2),
+              spreadRadius: 1,
+              blurRadius: 1,
+            ),
+          ],
         ),
         child: Row(
           children: [

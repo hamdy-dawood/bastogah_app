@@ -1,9 +1,9 @@
 import 'package:bastoga/core/components/components.dart';
+import 'package:bastoga/core/utils/colors.dart';
+import 'package:bastoga/core/utils/constance.dart';
+import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/utils/constance.dart';
-import '../../../../../../core/utils/image_manager.dart';
 
 class SuccessOrderAlert extends StatelessWidget {
   final void Function()? onTap;
@@ -23,10 +23,10 @@ class SuccessOrderAlert extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: Colors.black12.withValues(alpha: 0.1),
+                color: AppColors.grey9A.withValues(alpha: 0.2),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: const Offset(3, 3), // Shadow offset from right and bottom
+                offset: const Offset(3, 3),
               ),
             ],
           ),
@@ -49,9 +49,6 @@ class SuccessOrderAlert extends StatelessWidget {
                   ],
                 ),
               ),
-              // const SizedBox(
-              //   height: 16.0,
-              // ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(ImageManager.successIcon),

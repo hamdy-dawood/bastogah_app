@@ -4,7 +4,7 @@ import 'package:bastoga/core/components/components.dart';
 import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/overlay_loading.dart';
 import 'package:bastoga/core/components/printer/mdsoft_printer.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
@@ -181,8 +181,12 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey9A.withValues(alpha: 0.2),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                    ),
                   ],
                 ),
                 child: Column(
@@ -223,8 +227,12 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey9A.withValues(alpha: 0.2),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                    ),
                   ],
                 ),
                 child: Row(
@@ -268,8 +276,12 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey9A.withValues(alpha: 0.2),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                    ),
                   ],
                 ),
                 child: Column(

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bastoga/core/components/bottom_nav_bar/merchant_default_bottom_nav.dart';
 import 'package:bastoga/core/components/default_emit_loading.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_states.dart';

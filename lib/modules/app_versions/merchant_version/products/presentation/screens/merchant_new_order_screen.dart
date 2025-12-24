@@ -1,4 +1,4 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_states.dart';
@@ -88,13 +88,6 @@ class _MerchantNewOrderScreenState extends State<MerchantNewOrderScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: AppColors.black.withValues(alpha: 0.2)),
-                      // boxShadow: const [
-                      //   BoxShadow(
-                      //     color: Colors.black26,
-                      //     spreadRadius: 1,
-                      //     blurRadius: 1,
-                      //   ),
-                      // ],
                     ),
                     child: Column(
                       children: [

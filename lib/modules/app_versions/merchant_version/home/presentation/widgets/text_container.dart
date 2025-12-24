@@ -9,12 +9,16 @@ class TextContainer extends StatelessWidget {
     this.borderColor,
     required this.fontColor,
     this.borderRadius,
+    this.fontSize,
+    this.fontWeight,
   });
 
   final String text;
   final Color buttonColor, fontColor;
   final Color? borderColor;
   final double? borderRadius;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,12 @@ class TextContainer extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 3),
-        child: CustomText(text: text, color: fontColor, fontWeight: FontWeight.w700, fontSize: 16),
+        child: CustomText(
+          text: text,
+          color: fontColor,
+          fontWeight: fontWeight ?? FontWeight.w700,
+          fontSize: fontSize ?? 16,
+        ),
       ),
     );
   }

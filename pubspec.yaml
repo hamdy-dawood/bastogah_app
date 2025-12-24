@@ -81,6 +81,7 @@ dependencies:
   package_info_plus: ^8.0.0
   socket_io_client: ^2.0.3+1
   lottie:
+  flutter_launcher_icons: ^0.14.4
 
   intl: any
 
@@ -91,12 +92,12 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/login_logo.png"
+  image_path: "assets/images/app_logo.png"
   web:
     generate: true
-    image_path: "assets/images/login_logo.png"
-    background_color: "#ffffff"
-    theme_color: "#ffffff"
+    image_path: "assets/images/app_logo.png"
+    background_color: "#FF7F00"
+    theme_color: "#FF7F00"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

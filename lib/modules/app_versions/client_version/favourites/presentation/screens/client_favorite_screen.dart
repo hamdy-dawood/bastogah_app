@@ -1,5 +1,5 @@
 import 'package:bastoga/core/caching/local_favorite.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/components/components.dart';

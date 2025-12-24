@@ -1,4 +1,4 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +31,7 @@ class AlertPopUp extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black12.withValues(alpha: 0.1),
+              color: AppColors.grey9A.withValues(alpha: 0.2),
               spreadRadius: 2,
               blurRadius: 5,
               offset: const Offset(3, 3),

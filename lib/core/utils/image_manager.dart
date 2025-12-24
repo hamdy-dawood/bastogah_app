@@ -19,6 +19,7 @@ class ImageManager {
   static const String viewMapImage = '$imagesPath/view_map.png';
   static const String emptyImage = '$imagesPath/empty_image.png';
   static const String successIcon = '$imagesPath/success.png';
+  static const String dues = '$imagesPath/dues.png';
 
   /// svg s
   static const String notificationIcon = '$svgPath/notification.svg';

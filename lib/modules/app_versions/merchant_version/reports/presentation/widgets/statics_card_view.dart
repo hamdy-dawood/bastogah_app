@@ -1,7 +1,8 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../core/utils/image_manager.dart';
 import '../../domain/entities/report.dart';
@@ -68,11 +69,17 @@ class _StaticsCardViewState extends State<StaticsCardView> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      // margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 2, blurRadius: 10)],
+        border: Border.all(color: AppColors.greyF5),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.grey9A.withValues(alpha: 0.2),
+            blurRadius: 3,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,22 +89,24 @@ class _StaticsCardViewState extends State<StaticsCardView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: Text(
-                    widget.isMerchant ? merchantTitles[widget.index] : driverTitles[widget.index],
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: AppColors.black.withValues(alpha: 0.5)),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                CustomText(
+                  text:
+                      widget.isMerchant ? merchantTitles[widget.index] : driverTitles[widget.index],
+                  color: AppColors.black4B,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  maxLines: 2,
                 ),
-                Text(values[widget.index], style: Theme.of(context).textTheme.titleMedium),
+                CustomText(
+                  text: values[widget.index],
+                  color: AppColors.black4B,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 22,
+                ),
               ],
             ),
           ),
-          SvgPicture.asset(icons[widget.index], height: 24),
+          SvgIcon(icon: icons[widget.index], color: AppColors.defaultColor, height: 24),
         ],
       ),
     );

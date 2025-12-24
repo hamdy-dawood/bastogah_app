@@ -1,4 +1,4 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/orders.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,13 @@ class OrderWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
-          boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 1)],
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.grey9A.withValues(alpha: 0.2),
+              spreadRadius: 1,
+              blurRadius: 1,
+            ),
+          ],
         ),
         child: Column(
           children: [

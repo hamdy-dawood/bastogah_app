@@ -1,6 +1,6 @@
 import 'package:bastoga/core/components/add_button_with_text.dart';
 import 'package:bastoga/core/components/default_flushbar.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/products/presentation/cubit/products_cubit.dart';

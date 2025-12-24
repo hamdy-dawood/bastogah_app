@@ -1,6 +1,6 @@
 import 'package:bastoga/core/caching/local_cart.dart';
 import 'package:bastoga/core/components/custom_text.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/widgets/max_discount_applier.dart';
@@ -227,7 +227,7 @@ class _MerchantCartScreenState extends State<MerchantCartScreen> {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.black.withValues(alpha: 0.2),
+                              color: AppColors.grey9A.withValues(alpha: 0.2),
                               blurRadius: 10,
                               spreadRadius: 0.5,
                             ),

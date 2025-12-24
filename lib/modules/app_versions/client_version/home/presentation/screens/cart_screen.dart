@@ -1,6 +1,6 @@
 import 'package:bastoga/core/caching/local_cart.dart';
 import 'package:bastoga/core/components/custom_text.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
@@ -262,7 +262,7 @@ class _CartScreenState extends State<CartScreen> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.2),
+            color: AppColors.grey9A.withValues(alpha: 0.2),
             blurRadius: 10,
             spreadRadius: 0.5,
           ),

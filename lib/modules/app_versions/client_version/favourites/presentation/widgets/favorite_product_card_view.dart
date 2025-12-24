@@ -1,4 +1,4 @@
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/cubit/client_home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +38,13 @@ class FavoriteProductCardView extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: AppColors.grey5Color),
-              boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.grey9A.withValues(alpha: 0.2),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                ),
+              ],
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

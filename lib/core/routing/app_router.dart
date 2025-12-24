@@ -2,6 +2,8 @@ import 'package:bastoga/core/components/map/route_tracker_app/view.dart';
 import 'package:bastoga/core/components/printer/presentation/printer_settting_view.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/screens/discount_merchants_screen.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
+import 'package:bastoga/modules/app_versions/driver_version/profile/presentation/screens/driver_dues_screen.dart';
+import 'package:bastoga/modules/app_versions/driver_version/profile/presentation/screens/support_screen.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/domain/entities/merchant_order_details_object.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/cubit/home_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/screens/merchant_details_screen.dart';
@@ -95,6 +97,14 @@ class AppRouter {
           settings: settings,
           pageBuilder: (_, anim, anim1) => SignUpScreen(blocContext: arguments as BuildContext),
         );
+      case Routes.supportScreen:
+        return PageRouteBuilder(
+          settings: settings,
+          pageBuilder: (_, anim, anim1) => const SupportScreen(),
+        );
+
+      // ========================= CLIENT ========================== //
+
       case Routes.clientHomeScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -146,7 +156,6 @@ class AppRouter {
               (_, anim, anim1) =>
                   ProductDetailsScreen(productDetailsObject: arguments as ProductDetailsObject),
         );
-
       case Routes.clientOrderDetailsScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -155,7 +164,6 @@ class AppRouter {
                 driverOrderDetailsObject: arguments as ClientOrderDetailsObject,
               ),
         );
-
       case Routes.newOrderScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -163,7 +171,8 @@ class AppRouter {
               (_, anim, anim1) => NewOrderScreen(newOrderObject: arguments as NewOrderObject),
         );
 
-      // ==================  DRIVER ================== //
+      // ========================= DRIVER ========================== //
+
       case Routes.driverHomeScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -191,7 +200,6 @@ class AppRouter {
                 child: const DriverProfileScreen(),
               ),
         );
-
       case Routes.driverOrderDetailsScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -200,8 +208,18 @@ class AppRouter {
                 driverOrderDetailsObject: arguments as ClientDriverOrderDetailsObject,
               ),
         );
+      case Routes.driverDuesScreen:
+        return PageRouteBuilder(
+          settings: settings,
+          pageBuilder:
+              (_, anim, anim1) => BlocProvider(
+                create: (context) => getIt<DriverHomeCubit>(),
+                child: const DriverDuesScreen(),
+              ),
+        );
 
-      // ==================  MERCHANT ================== //
+      // ========================= MERCHANT ========================== //
+
       case Routes.merchantHomeScreen:
         return PageRouteBuilder(
           settings: settings,
@@ -283,14 +301,12 @@ class AppRouter {
               (_, anim, anim1) =>
                   MerchantNewOrderScreen(newOrderObject: arguments as NewOrderObject),
         );
-
       case Routes.addProductScreen:
         return PageRouteBuilder(
           settings: settings,
           pageBuilder:
               (_, anim, anim1) => AddEditProductScreen(productObject: arguments as ProductObject),
         );
-
       case Routes.printerScreen:
         return PageRouteBuilder(
           settings: settings,

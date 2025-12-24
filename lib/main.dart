@@ -7,7 +7,7 @@ import 'package:toastification/toastification.dart';
 import 'core/bloc_observer/bloc_observer.dart';
 import 'core/caching/shared_prefs.dart';
 import 'core/dependancy_injection/dependancy_injection.dart';
-import 'core/helpers/context_extention.dart';
+import 'core/helpers/context_extension.dart';
 import 'core/update_manager/app_update_manager.dart';
 import 'firebase_options.dart';
 import 'my_app.dart';
@@ -25,7 +25,7 @@ void main() async {
 
   await AppUpdateManager.initialize("com.mdsoft.bastoga", navigatorKey);
 
-  const Locale arabicLocal = Locale('ar', 'SA');
+  const Locale arabicLocal = Locale('ar');
 
   runApp(
     EasyLocalization(

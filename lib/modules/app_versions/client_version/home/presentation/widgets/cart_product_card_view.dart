@@ -1,6 +1,6 @@
 import 'package:bastoga/core/components/components.dart';
 import 'package:bastoga/core/components/custom_text.dart';
-import 'package:bastoga/core/helpers/context_extention.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/caching/local_cart.dart';
