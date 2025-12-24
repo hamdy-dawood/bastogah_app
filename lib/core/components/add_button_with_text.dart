@@ -25,7 +25,7 @@ class AddButtonWithTextIcon extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: buttonColor ?? AppColors.blue2Color,
+          color: buttonColor ?? AppColors.blue005,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

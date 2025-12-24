@@ -23,7 +23,8 @@ class DetailsFinishBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: AppColors.greyF5,
+                  color: AppColors.white,
+                  border: Border.all(color: AppColors.redE7),
                 ),
                 child: const RowIconText(
                   icon: Icons.close,

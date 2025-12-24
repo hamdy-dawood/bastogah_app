@@ -21,6 +21,8 @@ class MerchantHomeCubit extends Cubit<MerchantHomeStates> {
 
   MerchantHomeCubit(this.baseMerchantHomeRepository) : super(HomeInitialState());
 
+  final searchController = TextEditingController();
+
   List<Orders>? orders;
 
   Future getOrders({required int page, required int status, String? date}) async {

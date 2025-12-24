@@ -1,22 +1,21 @@
 import 'package:bastoga/core/components/alert_pop_up.dart';
 import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/default_text_form_field.dart';
+import 'package:bastoga/core/external/url_launcher.dart';
 import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
+import 'package:bastoga/core/utils/constance.dart';
 import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/driver_order_details_object.dart';
+import 'package:bastoga/modules/app_versions/client_version/my_orders/presentation/widgets/order_details_row_item.dart';
+import 'package:bastoga/modules/app_versions/client_version/my_orders/presentation/widgets/order_items_widget.dart';
+import 'package:bastoga/modules/app_versions/client_version/my_orders/presentation/widgets/time_date_box.dart';
+import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/details_finish_bottom_sheet.dart';
+import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/row_icon_text.dart';
+import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/text_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../../core/components/default_text_form_field.dart';
-import '../../../../../../core/external/url_launcher.dart';
-import '../../../../../../core/utils/constance.dart';
-import '../../../../client_version/my_orders/presentation/widgets/order_details_row_item.dart';
-import '../../../../client_version/my_orders/presentation/widgets/order_items_widget.dart';
-import '../../../../client_version/my_orders/presentation/widgets/time_date_box.dart';
-import '../../../../merchant_version/home/presentation/widgets/details_finish_bottom_sheet.dart';
-import '../../../../merchant_version/home/presentation/widgets/row_icon_text.dart';
-import '../../../../merchant_version/home/presentation/widgets/text_container.dart';
 
 class DriverOrderDetailsScreen extends StatelessWidget {
   final ClientDriverOrderDetailsObject driverOrderDetailsObject;
@@ -92,7 +91,7 @@ class DriverOrderDetailsScreen extends StatelessWidget {
                 TextContainer(
                   text:
                       driverOrderDetailsObject.order.status == 0
-                          ? 'انتظار'
+                          ? 'قيد الانتظار'
                           : driverOrderDetailsObject.order.status == 1
                           ? 'انتظار سائق'
                           : driverOrderDetailsObject.order.status == 2

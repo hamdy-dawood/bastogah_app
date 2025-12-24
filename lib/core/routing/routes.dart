@@ -7,6 +7,7 @@ class Routes {
   static const String signUpScreen = '/signUpScreen';
 
   static const String supportScreen = '/supportScreen';
+  static const String securityScreen = '/securityScreen';
 
   // ========================= CLIENT ========================== //
 

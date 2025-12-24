@@ -62,7 +62,6 @@ class ImageManager {
   static const String circlePhoneIcon = '$svgPath/circle_phone_icon.svg';
   static const String circleLocationIcon = '$svgPath/circle_location_icon.svg';
 
-  static const String searchIcon = '$svgPath/search_icon.svg';
   static const String filterIcon = '$svgPath/filter_icon.svg';
   static const String correctIcon = '$svgPath/correct_icon.svg';
 
@@ -88,4 +87,9 @@ class ImageManager {
   static const String logout = '$svgPath/logout.svg';
   static const String card = '$svgPath/card.svg';
   static const String help = '$svgPath/help.svg';
+  static const String user = '$svgPath/user.svg';
+  static const String close = '$svgPath/close.svg';
+  static const String home2 = '$svgPath/home2.svg';
+  static const String security = '$svgPath/security.svg';
+  static const String notification2 = '$svgPath/notification2.svg';
 }

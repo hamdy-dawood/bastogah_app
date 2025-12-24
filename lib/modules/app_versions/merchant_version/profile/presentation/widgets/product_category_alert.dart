@@ -104,7 +104,7 @@ class ProductCategoryAlert extends StatelessWidget {
                     isEdit ? "تعديل" : "إضافة",
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyMedium?.copyWith(color: AppColors.blue2Color, fontSize: 16),
+                    ).textTheme.bodyMedium?.copyWith(color: AppColors.blue005, fontSize: 16),
                   ),
                 ),
               );

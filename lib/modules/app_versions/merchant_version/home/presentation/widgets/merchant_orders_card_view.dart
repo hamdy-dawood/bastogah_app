@@ -1,10 +1,19 @@
+import 'dart:io';
+
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
+import 'package:bastoga/core/external/url_launcher.dart';
 import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/core/utils/constance.dart';
+import 'package:bastoga/core/utils/image_manager.dart';
 import 'package:bastoga/modules/app_versions/client_version/my_orders/domain/entities/orders.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/domain/entities/merchant_order_details_object.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/phone_number.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MerchantOrdersCardView extends StatelessWidget {
   final Orders order;
@@ -26,157 +35,284 @@ class MerchantOrdersCardView extends StatelessWidget {
         );
       },
       child: Container(
-        // padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: AppColors.grey9A.withValues(alpha: 0.2),
-              spreadRadius: 4,
-              blurRadius: 5,
+              spreadRadius: 1,
+              blurRadius: 1,
             ),
           ],
         ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('#${order.billNo}', style: Theme.of(context).textTheme.titleMedium),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: CustomText(
+                        text: "#${order.billNo}",
+                        color: AppColors.black1A,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        maxLines: 3,
+                      ),
+                    ),
                   ),
-                  // if (order.driverName.isEmpty)
-                  //   const TextContainer(
-                  //     text: 'بدون سائق',
-                  //     buttonColor: AppColors.redColor,
-                  //     fontColor: Colors.white,
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //   child: Text(
+                  //     '${AppConstance.dateFormat.format(DateTime.parse(order.createdAt).add(const Duration(hours: 3)))} في ${AppConstance.timeFormat.format(DateTime.parse(order.createdAt).add(const Duration(hours: 3)))}',
+                  //     style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black),
                   //   ),
+                  // ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 5),
+            Container(
+              padding: const EdgeInsets.all(14),
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: AppColors.defaultColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Column(
+                children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      '${AppConstance.dateFormat.format(DateTime.parse(order.createdAt).add(const Duration(hours: 3)))} في ${AppConstance.timeFormat.format(DateTime.parse(order.createdAt).add(const Duration(hours: 3)))}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black),
-                    ),
-                  ),
-                  // const Icon(
-                  //   Icons.more_vert,
-                  //   color: AppColors.defaultColor,
-                  //   size: 25,
-                  // ),
-                ],
-              ),
-            ),
-            AppConstance.horizontalDivider,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  // Expanded(
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //         'هاتف العميل',
-                  //         style: Theme.of(context).textTheme.bodySmall,
-                  //       ),
-                  //       const SizedBox(height: 8),
-                  //       Text(
-                  //         order.phone,
-                  //         style: Theme.of(context).textTheme.bodyLarge,
-                  //         textDirection: TextDirection.ltr,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Text('الموقع :', style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 8),
-                        Text(
-                          "${order.region?.name ?? order.client?.region?.name ?? ""} , ${order.city?.name ?? order.client?.city?.name ?? ""}",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "هاتف الزبون",
+                                color: AppColors.black4B,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      UrlLaunchers().phoneCallLauncher(phoneNumber: order.phone);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: SvgIcon(
+                                        icon: ImageManager.phoneIcon,
+                                        color: AppColors.defaultColor,
+                                        height: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Builder(
+                                      builder: (context) {
+                                        final phone = order.phone;
+                                        return CustomText(
+                                          text:
+                                              phone.startsWith('+')
+                                                  ? PhoneNumber.fromCompleteNumber(
+                                                    completeNumber: phone,
+                                                  ).number
+                                                  : phone,
+                                          color: AppColors.black1A,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                          textDirection: TextDirection.ltr,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('نقطة دالة', style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 8),
-                        Text(
-                          order.items.isEmpty ? "--" : order.address,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('السائق', style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 5),
-                        Text(
-                          order.driverName.isNotEmpty ? order.driverName : "--",
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.black.withValues(alpha: 0.5),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "الموقع :",
+                                color: AppColors.black4B,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (Platform.isIOS) {
+                                        await launchUrlString(
+                                          "maps:${order.locationLat},${order.locationLng}?q=${order.locationLat},${order.locationLng}",
+                                          mode: LaunchMode.externalApplication,
+                                        );
+                                      } else {
+                                        await launchUrlString(
+                                          "geo:${order.locationLat},${order.locationLng}?q=${order.locationLat},${order.locationLng}",
+                                          mode: LaunchMode.externalApplication,
+                                        );
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: SvgIcon(
+                                        icon: ImageManager.location,
+                                        color: AppColors.defaultColor,
+                                        height: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: CustomText(
+                                      text:
+                                          "${order.region?.name ?? order.client?.region?.name ?? ""} , ${order.city?.name ?? order.client?.city?.name ?? ""}",
+
+                                      color: AppColors.black1A,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  // if (order.status == 2)
-                  //   Padding(
-                  //     padding: const EdgeInsets.symmetric(horizontal: 10),
-                  //     child: SvgPicture.asset(ImageManager.mapIcon),
-                  //   ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: "السائق",
+                              color: AppColors.black4B,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: SvgIcon(
+                                    icon: ImageManager.user,
+                                    color: AppColors.defaultColor,
+                                    height: 18,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: CustomText(
+                                    text: order.driverName.isNotEmpty ? order.driverName : "--",
+                                    color: AppColors.black1A,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: "صافى المبلغ",
+                              color: AppColors.black4B,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                            const SizedBox(height: 5),
+                            CustomText(
+                              text: "${AppConstance.currencyFormat.format(order.itemsPrice)} د",
+                              color: AppColors.black1A,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: "مبلغ التوصيل",
+                              color: AppColors.black4B,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                            const SizedBox(height: 5),
+                            CustomText(
+                              text: "${AppConstance.currencyFormat.format(order.shippingPrice)} د",
+                              color: AppColors.black1A,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (order.status == 4) SizedBox(height: 20),
+                  if (order.status == 4)
+                    Row(
                       children: [
-                        Text('صافى المبلغ', style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 5),
-                        Text(
-                          '${AppConstance.currencyFormat.format(order.itemsPrice)} د',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: const Icon(CupertinoIcons.clear, size: 21, color: AppColors.redE7),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "سبب الإلغاء",
+                                color: AppColors.redE7,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                              const SizedBox(height: 5),
+                              CustomText(
+                                text: order.canceledReason,
+                                color: AppColors.black1A,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                maxLines: 10,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('مبلغ التوصيل', style: Theme.of(context).textTheme.bodySmall),
-                        const SizedBox(height: 5),
-                        Text(
-                          '${AppConstance.currencyFormat.format(order.shippingPrice)} د',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

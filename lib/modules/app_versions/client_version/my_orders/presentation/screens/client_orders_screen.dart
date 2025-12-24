@@ -17,7 +17,7 @@ class ClientOrdersScreen extends StatefulWidget {
 }
 
 class _ClientOrdersScreenState extends State<ClientOrdersScreen> {
-  List<String> tabs = ['الكل', 'انتظار', 'بدون سائق', 'قيد التنفيذ', 'مكتمل', 'ملغي'];
+  List<String> tabs = ['الكل', 'قيد الانتظار', 'بدون سائق', 'قيد التنفيذ', 'مكتمل', 'ملغي'];
 
   int tabIndex = 0;
 

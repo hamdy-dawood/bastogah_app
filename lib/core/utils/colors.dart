@@ -6,7 +6,6 @@ class AppColors {
   static const Color greenColor = Color(0xFF3ad78e);
   static const Color green2Color = Color(0xFF24A464);
   static const Color blueColor = Color(0xFF344C7C);
-  static const Color blue2Color = Color(0xFF3986FE);
   static const Color yellowColor = Color(0xFFFEB849);
   static const Color greyColor = Color(0xFF333333);
   static const Color grey2Color = Color(0xFF4F5051);
@@ -46,6 +45,7 @@ class AppColors {
   static const Color orangeFF = Color(0xFFFFC899);
 
   static const Color blue34 = Color(0xFF344C7C);
+  static const Color blue005 = Color(0xFF0053D5);
 
   static const Color transparent = Colors.transparent;
 }

@@ -1,5 +1,7 @@
 import 'package:bastoga/core/components/components.dart';
+import 'package:bastoga/core/components/custom_text.dart';
 import 'package:bastoga/core/components/default_emit_loading.dart';
+import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/utils/colors.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/cubit/merchant_profile_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/widgets/delete_product_category_alert.dart';
@@ -25,7 +27,32 @@ class _ProductCategoriesScreenState extends State<ProductCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("اقسام المنتجات", style: Theme.of(context).textTheme.bodyMedium)),
+      backgroundColor: AppColors.white,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: GestureDetector(
+            onTap: () {
+              context.pop();
+            },
+            child: CircleAvatar(
+              backgroundColor: AppColors.defaultColor.withValues(alpha: 0.15),
+              child: const Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: AppColors.defaultColor,
+                size: 20,
+              ),
+            ),
+          ),
+        ),
+        title: CustomText(
+          text: "إضافة الاقسام الفرعية",
+          color: AppColors.black1A,
+          fontWeight: FontWeight.w700,
+          fontSize: 16,
+        ),
+      ),
       body: BlocBuilder<MerchantProfileCubit, MerchantProfileStates>(
         builder: (context, state) {
           final cubit = context.read<MerchantProfileCubit>();
@@ -33,11 +60,11 @@ class _ProductCategoriesScreenState extends State<ProductCategoriesScreen> {
             return const Center(child: DefaultCircleProgressIndicator());
           }
           if (state is GetProductCategoriesFailedState) {
-            return Text(
-              state.message,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontSize: 30, color: Colors.red),
+            return CustomText(
+              text: state.message,
+              color: AppColors.redE7,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
             );
           }
           if (cubit.productCategories != null && cubit.productCategories!.isNotEmpty) {

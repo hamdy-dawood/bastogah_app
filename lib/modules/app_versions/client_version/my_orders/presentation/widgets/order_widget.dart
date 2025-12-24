@@ -47,7 +47,7 @@ class OrderWidget extends StatelessWidget {
                   TextContainer(
                     text:
                         order.status == 0
-                            ? 'انتظار'
+                            ? 'قيد الانتظار'
                             : order.status == 1
                             ? 'بدون سائق'
                             : order.status == 2
@@ -59,7 +59,7 @@ class OrderWidget extends StatelessWidget {
                         order.status == 0 || order.status == 1
                             ? AppColors.yellowColor
                             : order.status == 2
-                            ? AppColors.blue2Color
+                            ? AppColors.blue005
                             : order.status == 3
                             ? AppColors.green2Color
                             : AppColors.redE7,

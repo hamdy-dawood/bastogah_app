@@ -1,5 +1,7 @@
+import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/svg_icons.dart';
+import 'package:bastoga/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MerchantClientRow extends StatelessWidget {
   const MerchantClientRow({
@@ -13,34 +15,43 @@ class MerchantClientRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(icon, height: 50),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey, fontSize: 16),
-            ),
-            subTitle.isNotEmpty
-                ? Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    Text(
-                      subTitle,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 16),
-                      textDirection: TextDirection.ltr,
-                    ),
-                  ],
-                )
-                : const SizedBox(),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 22,
+            backgroundColor: AppColors.defaultColor.withValues(alpha: 0.15),
+            child: SvgIcon(icon: icon, color: AppColors.defaultColor, height: 20),
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+             if(title.isNotEmpty) CustomText(
+                text: title,
+                color: AppColors.grey9A,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+              ),
+              subTitle.isNotEmpty
+                  ? Column(
+                    children: [
+                      const SizedBox(height: 3),
+                      CustomText(
+                        text: subTitle,
+                        color: AppColors.black4B,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ],
+                  )
+                  : const SizedBox(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -105,7 +105,7 @@ class ClientOrderDetailsScreen extends StatelessWidget {
   String _getOrderStatusText(num status) {
     switch (status) {
       case 0:
-        return 'انتظار';
+        return 'قيد الانتظار';
       case 1:
         return 'بدون سائق';
       case 2:
@@ -125,7 +125,7 @@ class ClientOrderDetailsScreen extends StatelessWidget {
       case 1:
         return AppColors.yellowColor;
       case 2:
-        return AppColors.blue2Color;
+        return AppColors.blue005;
       case 3:
         return AppColors.green2Color;
       case 4:

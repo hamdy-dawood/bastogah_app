@@ -79,8 +79,7 @@ class _MerchantProductsScreenState extends State<MerchantProductsScreen> {
                   controller: searchProductController,
                   hint: 'ابحث...',
                   keyboardType: TextInputType.text,
-                  prefixIcon: SvgPicture.asset(ImageManager.searchIcon),
-                  // suffixIcon: SvgPicture.asset(ImageManager.filterIcon),
+                  prefixIcon: SvgPicture.asset(ImageManager.search),
                   onFieldSubmitted: (v) {
                     context.read<MerchantProductsCubit>().getProducts(
                       page: 0,

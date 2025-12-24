@@ -13,6 +13,7 @@ import 'package:bastoga/modules/app_versions/merchant_version/products/presentat
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/cubit/merchant_profile_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/screens/merchant_profile_screen.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/screens/product_categories_screen.dart';
+import 'package:bastoga/modules/app_versions/merchant_version/profile/presentation/screens/security_screen.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/reports/presentation/screens/merchant_reports_screen.dart';
 import 'package:bastoga/modules/auth/presentation/screens/register_otp_screen.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,11 @@ class AppRouter {
         return PageRouteBuilder(
           settings: settings,
           pageBuilder: (_, anim, anim1) => const SupportScreen(),
+        );
+      case Routes.securityScreen:
+        return PageRouteBuilder(
+          settings: settings,
+          pageBuilder: (_, anim, anim1) => const SecurityScreen(),
         );
 
       // ========================= CLIENT ========================== //

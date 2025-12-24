@@ -18,32 +18,34 @@ class DetailsPendingBottomSheet extends StatelessWidget {
       elevation: 10,
       child: Padding(
         padding: const EdgeInsets.all(18),
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: InkWell(
-                onTap: onTapAccept,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.blue2Color,
-                  ),
-                  child: const RowIconText(icon: Icons.check, text: "قبول"),
+            InkWell(
+              onTap: onTapAccept,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.defaultColor,
                 ),
+                child: const RowIconText(icon: Icons.check, text: "قبول الطلب"),
               ),
             ),
-            const SizedBox(width: 5),
-            Expanded(
-              child: InkWell(
-                onTap: onTapReject,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.redE7,
-                  ),
-                  child: const RowIconText(icon: Icons.close, text: "رفض"),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: onTapReject,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.white,
+                  border: Border.all(color: AppColors.redE7),
+                ),
+                child: const RowIconText(
+                  icon: Icons.close,
+                  text: "رفض",
+                  fontColor: AppColors.redE7,
                 ),
               ),
             ),

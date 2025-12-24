@@ -10,14 +10,12 @@ class WarningAlertPopUp extends StatelessWidget {
   final String? btnContent;
   final Color? btnColor;
 
-  // final bool showCloseButton;
   final void Function()? onPress;
 
   const WarningAlertPopUp({
     super.key,
     this.image,
     required this.description,
-    // this.showCloseButton = false,
     this.btnContent,
     this.btnColor,
     this.onPress,
@@ -39,7 +37,7 @@ class WarningAlertPopUp extends StatelessWidget {
                 color: AppColors.grey9A.withValues(alpha: 0.2),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: const Offset(3, 3), // Shadow offset from right and bottom
+                offset: const Offset(3, 3),
               ),
             ],
           ),
@@ -64,22 +62,11 @@ class WarningAlertPopUp extends StatelessWidget {
                   ),
                 if (image != null)
                   SizedBox(
-                    height: context.screenHeight / 4,
+                    height: context.screenHeight / 5,
                     width: context.screenWidth,
                     child: Image.asset(image!),
                   ),
-                // const SizedBox(
-                //   height: 25.0,
-                // ),
-                // Text(
-                //   'Alert',
-                //   textAlign: TextAlign.center,
-                //   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                //         fontSize: 28.0,
-                //         color: AppColors.redColor,
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                // ),
+
                 const SizedBox(height: 16.0),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width,
@@ -93,8 +80,7 @@ class WarningAlertPopUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
-
+                const SizedBox(height: 16),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width,
                   child: CustomElevated(

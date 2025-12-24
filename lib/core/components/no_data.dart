@@ -22,7 +22,6 @@ class NoData extends StatelessWidget {
           children: [
             Image.asset(
               ImageManager.noDataImage,
-              // scale: 6,
             ),
             Center(
               child: Text(
@@ -32,13 +31,6 @@ class NoData extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            // Text(
-            //   'قم بإضافة بعض البيانات لعرضها هنا...',
-            //   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            //     fontSize: 14,
-            //   ),
-            //   textAlign: TextAlign.center,
-            // ),
           ],
         ),
       ),

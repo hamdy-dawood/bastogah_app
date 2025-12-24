@@ -1,25 +1,25 @@
+import 'package:bastoga/core/caching/shared_prefs.dart';
+import 'package:bastoga/core/components/app_version_widget.dart';
+import 'package:bastoga/core/components/bottom_nav_bar/driver_default_bottom_nav.dart';
 import 'package:bastoga/core/components/custom_text.dart';
+import 'package:bastoga/core/components/default_emit_loading.dart';
 import 'package:bastoga/core/components/default_flushbar.dart';
 import 'package:bastoga/core/components/loader.dart';
 import 'package:bastoga/core/components/warning_alert_pop_up.dart';
 import 'package:bastoga/core/helpers/context_extension.dart';
 import 'package:bastoga/core/helpers/dialog_helper.dart';
+import 'package:bastoga/core/routing/routes.dart';
 import 'package:bastoga/core/utils/colors.dart';
+import 'package:bastoga/core/utils/constance.dart';
+import 'package:bastoga/core/utils/image_manager.dart';
+import 'package:bastoga/firebase_notifications.dart';
 import 'package:bastoga/modules/app_versions/client_version/home/presentation/cubit/client_home_cubit.dart';
+import 'package:bastoga/modules/app_versions/client_version/my_profile/presentation/widgets/profile_info_row_item.dart';
+import 'package:bastoga/modules/app_versions/driver_version/home/presentation/cubit/driver_home_cubit.dart';
 import 'package:bastoga/modules/app_versions/merchant_version/home/presentation/widgets/row_icon_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/caching/shared_prefs.dart';
-import '../../../../../../core/components/app_version_widget.dart';
-import '../../../../../../core/components/bottom_nav_bar/driver_default_bottom_nav.dart';
-import '../../../../../../core/components/default_emit_loading.dart';
-import '../../../../../../core/routing/routes.dart';
-import '../../../../../../core/utils/constance.dart';
-import '../../../../../../core/utils/image_manager.dart';
-import '../../../../../../firebase_notifications.dart';
-import '../../../../client_version/my_profile/presentation/widgets/profile_info_row_item.dart';
-import '../../../home/presentation/cubit/driver_home_cubit.dart';
 
 class DriverProfileScreen extends StatefulWidget {
   const DriverProfileScreen({super.key});

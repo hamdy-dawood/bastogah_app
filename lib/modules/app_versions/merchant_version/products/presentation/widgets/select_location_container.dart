@@ -25,7 +25,7 @@ class SelectLocationContainer extends StatelessWidget {
           icon: ImageManager.location,
           color: merchantProductsCubit.latitude == 0 ? AppColors.black : Colors.white,
           buttonColor:
-              merchantProductsCubit.latitude == 0 ? AppColors.grey8Color : AppColors.blue2Color,
+              merchantProductsCubit.latitude == 0 ? AppColors.grey8Color : AppColors.blue005,
           onTap: () {
             context.pushNamed(Routes.routeTrackerAppMap, arguments: context);
           },
