@@ -73,7 +73,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="pastoga_channel_id" />
+            android:value="bastoga_channel_id" />
         <receiver
             android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
             android:directBootAware="true"

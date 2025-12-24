@@ -28,11 +28,11 @@ class MyApp extends StatelessWidget {
           return false;
         },
         child: MaterialApp(
-          title: 'Pastoga',
+          title: "Bastogah",
           debugShowCheckedModeBanner: false,
-          locale: const Locale('ar'),
+          locale: context.locale,
+          localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
-          localizationsDelegates: [...context.localizationDelegates],
           theme: lightTheme,
           initialRoute: Routes.splashScreen,
           onGenerateRoute: AppRouter().generateRoute,

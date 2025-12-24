@@ -16,19 +16,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   EasyLocalization.ensureInitialized();
 
-  await Firebase.initializeApp(name: 'pastoga', options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(name: 'bastoga', options: DefaultFirebaseOptions.currentPlatform);
 
   setupGetIt();
   await Caching.init();
 
   Bloc.observer = MyBlocObserver();
 
-  await AppUpdateManager.initialize("com.mdsoft.pastoga", navigatorKey);
+  await AppUpdateManager.initialize("com.mdsoft.bastoga", navigatorKey);
+
+  const Locale arabicLocal = Locale('ar', 'SA');
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale("ar")],
-      fallbackLocale: Locale("ar"),
+      supportedLocales: const [arabicLocal],
+      fallbackLocale: arabicLocal,
       path: "assets/translations",
       child: const ToastificationWrapper(child: MyApp()),
     ),
